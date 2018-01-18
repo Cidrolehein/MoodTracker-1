@@ -13,17 +13,17 @@ import com.openclassrooms.moodtracker.Controllers.Fragments.PageFragment;
 public class PageAdapter extends FragmentPagerAdapter {
 
     private int [] colors;
-    private int [] feelings;
+    private int [] smileys;
 
-    public PageAdapter(FragmentManager fm) {
+    public PageAdapter(FragmentManager fm, int[] colors, int [] feelings) {
         super(fm);
         this.colors = colors;
-        this.feelings = feelings;
+        this.smileys = smileys;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return(PageFragment.newInstance(position, this.colors[position], this.feelings[position]));
+        return(PageFragment.newInstance(position, this.colors[position], this.smileys[position]));
     }
 
     @Override
