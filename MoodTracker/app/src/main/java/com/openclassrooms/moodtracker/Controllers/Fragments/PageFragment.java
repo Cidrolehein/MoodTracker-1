@@ -28,7 +28,7 @@ public class PageFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static PageFragment newInstance(){
+    public static PageFragment newInstance(int position, int color, int feeling){
         PageFragment pageFragment = new PageFragment();
         Bundle args = new Bundle();
         args.putInt(KEY_POSITION, position);
