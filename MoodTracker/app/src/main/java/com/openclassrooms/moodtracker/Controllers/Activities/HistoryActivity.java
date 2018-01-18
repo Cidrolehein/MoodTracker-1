@@ -29,14 +29,17 @@ public class HistoryActivity extends AppCompatActivity {
         int [] viewSize = {100, 250, 400, 550, 700};
         String [] dayCount = {"Il y a une semaine", "Il y a 6 jours", "Il y a 5 jours","Il y a 4 jours", "Il y a 3 jours", "Avant-hier", "Hier"};
 
-        int intFeeling = feelings[3];
+        // IntFeeling for every day
+        int [] days = {3, 2, 0, 2, 3, 1, 2};
+
 
         for (int i = 0; i < textViews.length; i++){
             textViews[i].setText(dayCount[i]);
             textViews[i].setTextSize(20);
             textViews[i].setPadding(10,0,0,0);
-            textViews[i].setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[intFeeling]);
-            textViews[i].getLayoutParams().width = viewSize[intFeeling];
+
+            textViews[i].setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[days[i]]);
+            textViews[i].getLayoutParams().width = viewSize[days[i]];
         }
     }
 
