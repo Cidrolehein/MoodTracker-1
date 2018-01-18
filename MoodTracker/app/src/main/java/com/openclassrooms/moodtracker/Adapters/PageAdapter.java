@@ -18,6 +18,7 @@ public class PageAdapter extends FragmentPagerAdapter {
     public PageAdapter(FragmentManager fm) {
         super(fm);
         this.colors = colors;
+        this.feelings = feelings;
     }
 
     @Override
