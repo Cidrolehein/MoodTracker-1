@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Send to HistoryActivity
-                            }
+                Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(historyActivityIntent);
+            }
         });
 
         mCommentButton.setOnClickListener(new View.OnClickListener() {
