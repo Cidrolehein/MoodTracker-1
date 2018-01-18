@@ -24,13 +24,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
 
-        setDailyMood(mPreferences, 0, 0);
-        setDailyMood(mPreferences, 1, 4);
-        setDailyMood(mPreferences, 2, 1);
-        setDailyMood(mPreferences, 3, 3);
-        setDailyMood(mPreferences, 4, 2);
-        setDailyMood(mPreferences, 5, 0);
-        setDailyMood(mPreferences, 6, 3);
+        updateDailyMoods(mPreferences, 2);
 
         this.configureTextViews();
     }
@@ -70,4 +64,24 @@ public class HistoryActivity extends AppCompatActivity {
         prefsFile.edit().putInt("day"+numDay, dailyMood).apply();
     }
 
+    public void updateDailyMoods(SharedPreferences prefsFile, int yesterdayMood){
+
+        int [] dailyMoods = new int [7];
+
+        //Get Last Saved DailyMoods
+        for(int i = 0; i < dailyMoods.length; i++){
+            dailyMoods[i] = getDailyMood(prefsFile, i);
+        }
+
+        //Move every dailyMoods up one day  (3days ago's Mood -> 4days ago's Mood)
+        for(int i = 6; i > 0; i--){
+            dailyMoods[i] = dailyMoods[i-1];
+        }
+        dailyMoods[0] = yesterdayMood;
+
+        //Save updated dailyMoods
+        for(int i = 0; i < dailyMoods.length; i++) {
+            prefsFile.edit().putInt("day" + i, dailyMoods[i]).apply();
+        }
+    }
 }
