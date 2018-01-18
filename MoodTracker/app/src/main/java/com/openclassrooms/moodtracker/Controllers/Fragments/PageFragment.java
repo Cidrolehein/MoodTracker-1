@@ -3,9 +3,15 @@ package com.openclassrooms.moodtracker.Controllers.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ImageViewCompat;
+import android.support.v4.widget.TextViewCompat;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.openclassrooms.moodtracker.R;
 
@@ -32,12 +38,23 @@ public class PageFragment extends Fragment {
         return(pageFragment);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_page, container, false);
+        View result = inflater.inflate(R.layout.fragment_page, container, false);
+        LinearLayout rootView = (LinearLayout) result.findViewById(R.id.fragment_page_rootview);
+        ImageView imageView = (ImageView) result.findViewById(R.id.fragment_page_imageview);
+
+        int position = getArguments().getInt(KEY_POSITION, -1);
+        int color = getArguments().getInt(KEY_COLOR, -1);
+        int feeling = getArguments().getInt(KEY_FEELING, -1);
+
+        rootView.setBackgroundColor(color);
+        imageView.setImageResource(feeling);
+        Log.e(getClass().getSimpleName(), "onCreateView called for fragment n°" + position);
+
+        return result;
     }
 
 }
