@@ -13,69 +13,48 @@
         android:id="@+id/activity_history_text_view_7"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:text="Il y a une semaine"
-        android:paddingStart="10dp"/>
+        android:layout_weight="1"/>
 
 
     <TextView
         android:id="@+id/activity_history_text_view_6"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:text="Il y a 6 jours"
-        android:paddingStart="10dp"/>
+        android:layout_weight="1"/>
 
 
     <TextView
         android:id="@+id/activity_history_text_view_5"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:text="Il y a 5 jours"
-        android:paddingStart="10dp"/>
+        android:layout_weight="1"/>
 
 
     <TextView
         android:id="@+id/activity_history_text_view_4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:text="Il y a 4 jours"
-        android:paddingStart="10dp"/>
+        android:layout_weight="1"/>
 
 
     <TextView
         android:id="@+id/activity_history_text_view_3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:text="Il y a 3 jours"
-        android:paddingStart="10dp"/>
+        android:layout_weight="1"/>
 
 
     <TextView
         android:id="@+id/activity_history_text_view_2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:text="Avant-hier"
-        android:paddingStart="10dp"/>
+        android:layout_weight="1"/>
 
 
     <TextView
         android:id="@+id/activity_history_text_view_1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:text="Hier"
-        android:paddingStart="10dp"/>
+        android:layout_weight="1"/>
 
 </LinearLayout>
