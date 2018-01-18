@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mCommentButton;
     private Button mHistoryButton;
 
-    int [] smileys = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
+    int[] smileys = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
 
 
     @Override
@@ -45,20 +45,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Ajoutez un commentaire", Toast.LENGTH_SHORT).show();
-        }});
+            }
+        });
 
         this.configureViewPager();
     }
 
-    private void configureViewPager(){
+    private void configureViewPager() {
         ViewPager viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
         viewPager.setAdapter(new PageAdapter(
                 getSupportFragmentManager(),
                 getResources().getIntArray(R.array.colorPagesViewPager),
-                smileys){});
+                smileys) {
+        });
     }
-
-
-
-
 }
