@@ -14,9 +14,22 @@ import com.openclassrooms.moodtracker.R;
  */
 public class PageFragment extends Fragment {
 
+    private static final String KEY_POSITION ="position";
+    private static final String KEY_COLOR = "color";
+    private static final String KEY_FEELING = "feeling";
 
     public PageFragment() {
         // Required empty public constructor
+    }
+
+    public static PageFragment newInstance(){
+        PageFragment pageFragment = new PageFragment();
+        Bundle args = new Bundle();
+        args.putInt(KEY_POSITION, position);
+        args.putInt(KEY_COLOR, color);
+        args.putInt(KEY_FEELING, feeling);
+        pageFragment.setArguments(args);
+        return(pageFragment);
     }
 
 
