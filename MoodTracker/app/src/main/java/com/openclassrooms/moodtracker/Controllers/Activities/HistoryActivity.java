@@ -25,11 +25,12 @@ public class HistoryActivity extends AppCompatActivity {
                                  (TextView) findViewById(R.id.activity_history_text_view_2),
                                  (TextView) findViewById(R.id.activity_history_text_view_1)};
 
-        int [] feelings = {0, 1, 2, 3, 4};
         int [] viewSize = {100, 250, 400, 550, 700};
-        String [] dayCount = {"Il y a une semaine", "Il y a 6 jours", "Il y a 5 jours","Il y a 4 jours", "Il y a 3 jours", "Avant-hier", "Hier"};
 
-        // IntFeeling for every day
+        String [] dayCount = {"Il y a une semaine", "Il y a 6 jours", "Il y a 5 jours",
+                              "Il y a 4 jours", "Il y a 3 jours", "Avant-hier", "Hier"};
+
+        // IntFeeling for every day (0=sad / 1=disappointed / 2=normal / 3=happy / 4=superhappy
         int [] days = {3, 2, 0, 2, 3, 1, 2};
 
 
@@ -42,5 +43,4 @@ public class HistoryActivity extends AppCompatActivity {
             textViews[i].getLayoutParams().width = viewSize[days[i]];
         }
     }
-
 }
