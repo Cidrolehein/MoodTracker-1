@@ -51,15 +51,8 @@ public class MainActivity extends AppCompatActivity {
         mHistoryButton = (Button) findViewById(R.id.activity_main_history_button);
 
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
-
-        if(mTodayMood == null){
-            mTodayMood = new WeeklyMoods();
-            intTodayMood = 3;
-            Toast.makeText(MainActivity.this, "New WeeklyMood", Toast.LENGTH_SHORT).show();
-        }else{
-            intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
-            Toast.makeText(MainActivity.this, "Today Mood déjà enregistré", Toast.LENGTH_SHORT).show();
-        }
+        mTodayMood = new WeeklyMoods();
+        intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
 
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +70,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         this.configureViewPager();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ViewPager viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
+        mTodayMood.setDailyMood(mPreferences, 0, viewPager.getCurrentItem());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
+        intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
     }
 
     private void configureViewPager() {

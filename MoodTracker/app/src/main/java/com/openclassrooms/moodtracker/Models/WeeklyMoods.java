@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 public class WeeklyMoods {
 
     public int getDailyMood(SharedPreferences prefsFile, int numDay) {
-        int dailyMood = prefsFile.getInt("day"+numDay, 4);
+        int dailyMood = prefsFile.getInt("day"+numDay, 3);
         return dailyMood;
     }
 
