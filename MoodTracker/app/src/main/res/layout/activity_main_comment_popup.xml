@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main_comment_popup"
+    android:layout_width="250dp"
+    android:layout_height="200dp">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:inputType="text"
+        android:hint="Commentaire"
+        android:textColorHighlight="@color/colorAccent"
+        />
+
+    <Button
+        android:id="@+id/activity_main_comment_popup_validate_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:textColor="@color/colorAccent"
+        android:text="Valider"/>
+
+    <Button
+        android:id="@+id/activity_main_comment_popup_cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/colorAccent"
+        android:text="Annuler"/>
+
+</FrameLayout>
