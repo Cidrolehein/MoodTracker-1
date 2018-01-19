@@ -55,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
         viewPager.setAdapter(new PageAdapter(
                 getSupportFragmentManager(),
-                getResources().getIntArray(R.array.colorPagesViewPager),
-                smileys) {
-        });
+                getResources().getIntArray(R.array.colorPagesViewPager), smileys) {});
+        viewPager.setCurrentItem(3);
     }
 }
