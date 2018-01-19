@@ -23,7 +23,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
 
-        mWeeklyMoods.updateWeeklyMoods(mPreferences, 4);
+        mWeeklyMoods.setDailyMood(mPreferences, 0, 2);
+
+        mWeeklyMoods.updateWeeklyMoods(mPreferences);
 
         this.configureTextViews();
     }
@@ -39,14 +41,14 @@ public class HistoryActivity extends AppCompatActivity {
                                  (TextView) findViewById(R.id.activity_history_text_view_7)};
 
         //Set all TextViews
-        for (int i = 0; i < textViews.length; i++){
-            setTextView(textViews[i], i);
+        for (int i = 1; i < textViews.length + 1; i++){
+            setTextView(textViews[i-1], i);
         }
     }
 
     private void setTextView(TextView textView, int i){
         //set Text and Padding
-        textView.setText(getResources().getStringArray(R.array.dayCount)[i]);
+        textView.setText(getResources().getStringArray(R.array.dayCount)[i-1]);
         textView.setTextSize(20);
         textView.setPadding(10,0,0,0);
 

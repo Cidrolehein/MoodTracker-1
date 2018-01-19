@@ -17,9 +17,9 @@ public class WeeklyMoods {
         prefsFile.edit().putInt("day"+numDay, dailyMood).apply();
     }
 
-    public void updateWeeklyMoods(SharedPreferences prefsFile, int yesterdayMood){
+    public void updateWeeklyMoods(SharedPreferences prefsFile){
 
-        int [] weeklyMoods = new int [7];
+        int [] weeklyMoods = new int [8];
 
         //Get Last Saved DailyMoods
         for(int i = 0; i < weeklyMoods.length; i++){
@@ -27,13 +27,12 @@ public class WeeklyMoods {
         }
 
         //Move every dailyMoods up one day  (3days ago's Mood -> 4days ago's Mood)
-        for(int i = 6; i > 0; i--){
+        for(int i = 7; i > 0; i--){
             weeklyMoods[i] = weeklyMoods[i-1];
         }
-        weeklyMoods[0] = yesterdayMood;
 
         //Save updated weeklyMoods
-        for(int i = 0; i < weeklyMoods.length; i++) {
+        for(int i = 1; i < (weeklyMoods.length - 1); i++) {
             setDailyMood(prefsFile, i, weeklyMoods[i]);
         }
     }
