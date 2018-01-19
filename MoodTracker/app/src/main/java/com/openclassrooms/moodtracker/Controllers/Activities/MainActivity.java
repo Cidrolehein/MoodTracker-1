@@ -19,6 +19,9 @@ import com.openclassrooms.moodtracker.Adapters.PageAdapter;
 import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.R;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private Context mContext;
@@ -58,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Today Mood déjà enregistré", Toast.LENGTH_SHORT).show();
         }
 
-        mTodayMood.setDailyMood(mPreferences, 4, 1);
-        
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
