@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.openclassrooms.moodtracker.Models.DailyMood;
+import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.R;
 
 public class HistoryActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
 
-    private DailyMood dailyMoods = new DailyMood();
+    private WeeklyMoods mWeeklyMoods = new WeeklyMoods();
     private int [] viewSize = {250, 500, 750, 1000, 1250};
 
     private String [] dayCount = {"Il y a une semaine", "Il y a 6 jours", "Il y a 5 jours",
@@ -26,7 +26,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
 
-        dailyMoods.updateDailyMoods(mPreferences, 2);
+        mWeeklyMoods.updateWeeklyMoods(mPreferences, 4);
 
         this.configureTextViews();
     }
@@ -47,7 +47,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void setTextView(TextView textView, int i){
 
-        int dailyMood = dailyMoods.getDailyMood(mPreferences, i);
+        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, i);
 
         textView.setText(dayCount[i]);
         textView.setTextSize(20);
