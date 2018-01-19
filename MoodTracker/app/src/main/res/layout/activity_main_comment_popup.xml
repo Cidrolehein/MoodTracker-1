@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_main_comment_popup"
     android:layout_width="250dp"
-    android:layout_height="200dp">
+    android:layout_height="200dp"
+    android:background="@android:color/white">
 
     <EditText
         android:layout_width="wrap_content"

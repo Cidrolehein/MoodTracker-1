@@ -64,18 +64,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(MainActivity.this, "Ajoutez un commentaire", Toast.LENGTH_SHORT).show();
-
                 // Initialize a new instance of LayoutInflater service
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
                 // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.activity_main_comment_popup,null);
+                View commentPopupView = inflater.inflate(R.layout.activity_main_comment_popup,null);
 
                 // Initialize a new instance of popup window
-                mPopupWindow = new PopupWindow(customView, 800, 600);
+                mPopupWindow = new PopupWindow(commentPopupView, 800, 600, true);
 
-                // Get a reference for the custom view close button
-                Button cancelButton = (Button) customView.findViewById(R.id.activity_main_comment_popup_cancel_btn);
+                // Get a reference for the close and validate buttons
+                Button cancelButton = (Button) commentPopupView.findViewById(R.id.activity_main_comment_popup_cancel_btn);
+                Button validateButton = (Button) commentPopupView.findViewById(R.id.activity_main_comment_popup_validate_btn);
 
                 // Set a click listener for the popup window close button
                 cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +82,15 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         // Dismiss the popup window
                         mPopupWindow.dismiss();
+                    }
+                });
+
+                validateButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Save the comment
+                        mPopupWindow.dismiss();
+                        Toast.makeText(MainActivity.this, "Commentaire enregistré", Toast.LENGTH_SHORT).show();
                     }
                 });
 
