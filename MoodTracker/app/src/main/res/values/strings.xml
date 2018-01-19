@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">MoodTracker</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="dayCount">
+        <item>"Hier"</item>
+        <item>"Avant-hier"</item>
+        <item>"Il y a 3 jours"</item>
+        <item>"Il y a 4 jours"</item>
+        <item>"Il y a 5 jours"</item>
+        <item>"Il y a 6 jours"</item>
+        <item>"Il y a une semaine"</item>
+    </string-array>
+
 </resources>

@@ -15,9 +15,6 @@ public class HistoryActivity extends AppCompatActivity {
     private WeeklyMoods mWeeklyMoods = new WeeklyMoods();
     private int [] viewSize = {250, 500, 750, 1000, 1250};
 
-    private String [] dayCount = {"Il y a une semaine", "Il y a 6 jours", "Il y a 5 jours",
-            "Il y a 4 jours", "Il y a 3 jours", "Avant-hier", "Hier"};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +29,7 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void configureTextViews(){
+        //Serialize all TextViews
         TextView [] textViews = {(TextView) findViewById(R.id.activity_history_text_view_1),
                                  (TextView) findViewById(R.id.activity_history_text_view_2),
                                  (TextView) findViewById(R.id.activity_history_text_view_3),
@@ -40,18 +38,20 @@ public class HistoryActivity extends AppCompatActivity {
                                  (TextView) findViewById(R.id.activity_history_text_view_6),
                                  (TextView) findViewById(R.id.activity_history_text_view_7)};
 
+        //Set all TextViews
         for (int i = 0; i < textViews.length; i++){
             setTextView(textViews[i], i);
         }
     }
 
     private void setTextView(TextView textView, int i){
-
-        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, i);
-
-        textView.setText(dayCount[i]);
+        //set Text and Padding
+        textView.setText(getResources().getStringArray(R.array.dayCount)[i]);
         textView.setTextSize(20);
         textView.setPadding(10,0,0,0);
+
+        //Set BackgroundColor and width according to Day Mood
+        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, i);
 
         textView.setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[dailyMood]);
         textView.getLayoutParams().width = viewSize[dailyMood];
