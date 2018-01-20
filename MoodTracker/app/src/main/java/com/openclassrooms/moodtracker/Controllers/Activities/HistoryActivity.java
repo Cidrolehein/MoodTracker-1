@@ -23,10 +23,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
 
-        mWeeklyMoods.setDailyMood(mPreferences, 0, 2);
-
-        mWeeklyMoods.updateWeeklyMoods(mPreferences);
-
         this.configureTextViews();
     }
 

@@ -2,6 +2,8 @@ package com.openclassrooms.moodtracker.Models;
 
 import android.content.SharedPreferences;
 
+import java.util.Date;
+
 /**
  * Created by berenger on 18/01/2018.
  */
@@ -35,5 +37,8 @@ public class WeeklyMoods {
         for(int i = 1; i < (weeklyMoods.length - 1); i++) {
             setDailyMood(prefsFile, i, weeklyMoods[i]);
         }
+
+        //Renew Today Mood to default value
+        setDailyMood(prefsFile, 0, 3);
     }
 }

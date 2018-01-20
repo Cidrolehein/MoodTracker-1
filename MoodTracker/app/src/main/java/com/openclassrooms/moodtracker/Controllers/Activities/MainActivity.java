@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,17 +26,15 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private Context mContext;
-    private Activity mActivity;
     private PopupWindow mPopupWindow;
     private FrameLayout mMainLayout;
+    private ViewPager viewPager;
 
     private WeeklyMoods mTodayMood;
     private int intTodayMood;
     private SharedPreferences mPreferences;
+    private int currentDay;
 
-    private Button mCommentButton;
-    private Button mHistoryButton;
-    private View mCommentPopup;
     int[] smileys = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
 
 
@@ -44,15 +43,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mContext = getApplicationContext();
-        mActivity = MainActivity.this;
+        Button mCommentButton = (Button) findViewById(R.id.activity_main_comment_button);
+        Button mHistoryButton = (Button) findViewById(R.id.activity_main_history_button);
         mMainLayout = (FrameLayout) findViewById(R.id.activity_main_frame_layout);
-        mCommentButton = (Button) findViewById(R.id.activity_main_comment_button);
-        mHistoryButton = (Button) findViewById(R.id.activity_main_history_button);
+        mContext = getApplicationContext();
 
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mTodayMood = new WeeklyMoods();
-        intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
+
+        currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+
+        intTodayMood = showMoodDependingOnDayIdentity(mPreferences, currentDay, mTodayMood);
 
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,26 +74,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        ViewPager viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
-        mTodayMood.setDailyMood(mPreferences, 0, viewPager.getCurrentItem());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
-        intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
+    protected void onDestroy() {
+        super.onDestroy();
+        int position = viewPager.getCurrentItem();
+        mPreferences.edit().putInt("Today", currentDay).apply();
+        mTodayMood.setDailyMood(mPreferences, 0, position);
     }
 
     private void configureViewPager() {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
+        viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
         viewPager.setAdapter(new PageAdapter(
                 getSupportFragmentManager(),
                 getResources().getIntArray(R.array.colorPagesViewPager), smileys) {});
         viewPager.setCurrentItem(intTodayMood);
     }
+
+    private int showMoodDependingOnDayIdentity (SharedPreferences prefsFile, int currentDay, WeeklyMoods wm){
+        int savedDay = prefsFile.getInt("Today", currentDay);
+        if(currentDay != savedDay)  wm.updateWeeklyMoods(prefsFile);
+        return wm.getDailyMood(prefsFile, 0);
+    }
+
 
     private void showPopupWindow(){
         // Initialize a new instance of LayoutInflater service
