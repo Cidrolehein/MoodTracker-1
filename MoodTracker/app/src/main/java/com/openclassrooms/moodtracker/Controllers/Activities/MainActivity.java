@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private PopupWindow mPopupWindow;
     private FrameLayout mMainLayout;
     private ViewPager viewPager;
+    private Button mCommentButton;
+    private Button mHistoryButton;
 
     private WeeklyMoods mTodayMood;
     private int intTodayMood;
@@ -44,39 +46,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button mCommentButton = (Button) findViewById(R.id.activity_main_comment_button);
-        Button mHistoryButton = (Button) findViewById(R.id.activity_main_history_button);
+        //Configure Comment and History Buttons
+        mCommentButton = (Button) findViewById(R.id.activity_main_comment_button);
+        mHistoryButton = (Button) findViewById(R.id.activity_main_history_button);
         mMainLayout = (FrameLayout) findViewById(R.id.activity_main_frame_layout);
         mContext = getApplicationContext();
+        this.configureButtons();
 
+        //Configure ViewPager if same or new day
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mTodayMood = new WeeklyMoods();
-
         currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-
-        intTodayMood = showMoodDependingOnDayIdentity(mPreferences, currentDay, mTodayMood);
-
-        mHistoryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(historyActivityIntent);
-            }
-        });
-
-        mCommentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow();
-            }
-        });
-
-        this.configureViewPager();
+        this.configureDailyMoodWithDate(mPreferences, currentDay, mTodayMood);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //Save currentDay and currentMood as WeeklyMood[0]
         int position = viewPager.getCurrentItem();
         mPreferences.edit().putInt("Today", currentDay).apply();
         mTodayMood.setDailyMood(mPreferences, 0, position);
@@ -90,12 +77,34 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(intTodayMood);
     }
 
-    private int showMoodDependingOnDayIdentity (SharedPreferences prefsFile, int currentDay, WeeklyMoods wm){
+    private void configureDailyMoodWithDate (SharedPreferences prefsFile, int currentDay, WeeklyMoods wm){
+        //Get savedDay
         int savedDay = prefsFile.getInt("Today", currentDay);
+
+        //If savedDay is different from today, update WeeklyMoods and Comments and show default mood
         if(currentDay != savedDay)  wm.updateWeeklyMoods(prefsFile);
-        return wm.getDailyMood(prefsFile, 0);
+        intTodayMood = wm.getDailyMood(prefsFile, 0);
+        this.configureViewPager();
     }
 
+    private void configureButtons(){
+        mHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Start Activity History when History Button clicked
+                Intent historyActivityIntent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(historyActivityIntent);
+            }
+        });
+
+        mCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Show Popup Window when Comment Button clicked
+                showPopupWindow();
+            }
+        });
+    }
 
     private void showPopupWindow(){
         // Initialize a new instance of LayoutInflater service
@@ -119,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Save Text in EditText as a comment when Validate clicked
         final EditText validateComments = (EditText) commentPopupView.findViewById((R.id.activity_main_comment_popup_validate_edittext));
 
         validateButton.setOnClickListener(new View.OnClickListener() {
