@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -118,10 +119,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final EditText validateComments = (EditText) commentPopupView.findViewById((R.id.activity_main_comment_popup_validate_edittext));
+
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //getComment from EditText
+                String dailyComment = validateComments.getText().toString();
+
                 //Save the comment
+                mTodayMood.setDailyComment(mPreferences, 0, dailyComment);
                 mPopupWindow.dismiss();
                 Toast.makeText(MainActivity.this, "Commentaire enregistré", Toast.LENGTH_SHORT).show();
             }
