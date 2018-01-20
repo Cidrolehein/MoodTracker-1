@@ -2,8 +2,6 @@ package com.openclassrooms.moodtracker.Models;
 
 import android.content.SharedPreferences;
 
-import java.util.Date;
-
 /**
  * Created by berenger on 18/01/2018.
  */

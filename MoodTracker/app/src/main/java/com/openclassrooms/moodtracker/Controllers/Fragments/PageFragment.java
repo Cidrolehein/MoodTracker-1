@@ -31,9 +31,11 @@ public class PageFragment extends Fragment {
     public static PageFragment newInstance(int position, int color, int feeling){
         PageFragment pageFragment = new PageFragment();
         Bundle args = new Bundle();
+
         args.putInt(KEY_POSITION, position);
         args.putInt(KEY_COLOR, color);
         args.putInt(KEY_FEELING, feeling);
+
         pageFragment.setArguments(args);
         return(pageFragment);
     }
@@ -46,13 +48,14 @@ public class PageFragment extends Fragment {
         LinearLayout rootView = (LinearLayout) result.findViewById(R.id.fragment_page_rootview);
         ImageView imageView = (ImageView) result.findViewById(R.id.fragment_page_imageview);
 
+        //Get position, color and feeling
         int position = getArguments().getInt(KEY_POSITION, -1);
         int color = getArguments().getInt(KEY_COLOR, -1);
         int feeling = getArguments().getInt(KEY_FEELING, -1);
 
+        //Set Background color and smiley showed
         rootView.setBackgroundColor(color);
         imageView.setImageResource(feeling);
-        Log.e(getClass().getSimpleName(), "onCreateView called for fragment n°" + position);
 
         return result;
     }

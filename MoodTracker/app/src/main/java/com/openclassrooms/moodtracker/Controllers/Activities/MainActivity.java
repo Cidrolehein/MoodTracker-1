@@ -1,13 +1,11 @@
 package com.openclassrooms.moodtracker.Controllers.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +20,6 @@ import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.R;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         this.configureButtons();
 
-        //Configure ViewPager if same or new day
+        //Configure ViewPager if same day (get last saved mood) or new day (default mood)
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mTodayMood = new WeeklyMoods();
         currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);

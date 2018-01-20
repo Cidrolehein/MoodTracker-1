@@ -15,7 +15,7 @@ public class PageAdapter extends FragmentPagerAdapter {
     private int [] colors;
     private int [] smileys;
 
-    public PageAdapter(FragmentManager fm, int[] colors, int [] smileys) {
+    protected PageAdapter(FragmentManager fm, int[] colors, int [] smileys) {
         super(fm);
         this.colors = colors;
         this.smileys = smileys;
