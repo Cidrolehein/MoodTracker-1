@@ -36,28 +36,42 @@ public class HistoryActivity extends AppCompatActivity {
 
         FrameLayout frameLayout1 = (FrameLayout) findViewById(R.id.activity_history_framelayout1);
         TextView textView1 = (TextView) findViewById(R.id.activity_history_textview1);
-        ImageButton imageButton1 = (ImageButton) findViewById(R.id.activity_history_comment_btn1);
-
-        configureFrameLayout(frameLayout1, 1);
-        setTextView(textView1, 1);
-        configureCommentButton(imageButton1, 1);
+        ImageButton commentButton1 = (ImageButton) findViewById(R.id.activity_history_comment_btn1);
 
         FrameLayout frameLayout2 = (FrameLayout) findViewById(R.id.activity_history_framelayout2);
         TextView textView2 = (TextView) findViewById(R.id.activity_history_textview2);
-        ImageButton imageButton2 = (ImageButton) findViewById(R.id.activity_history_comment_btn2);
+        ImageButton commentButton2 = (ImageButton) findViewById(R.id.activity_history_comment_btn2);
 
-        configureFrameLayout(frameLayout2, 2);
-        setTextView(textView2, 2);
-        configureCommentButton(imageButton2, 2);
-    }
+        FrameLayout frameLayout3 = (FrameLayout) findViewById(R.id.activity_history_framelayout3);
+        TextView textView3 = (TextView) findViewById(R.id.activity_history_textview3);
+        ImageButton commentButton3 = (ImageButton) findViewById(R.id.activity_history_comment_btn3);
 
-    /*
-    private void configureTextViews(){
-        //Set all TextViews
-        for (int i = 0; i < frameLayouts.length + 1; i++){
-            setFrameLayout(frameLayouts[i], i);
+        FrameLayout frameLayout4 = (FrameLayout) findViewById(R.id.activity_history_framelayout4);
+        TextView textView4 = (TextView) findViewById(R.id.activity_history_textview4);
+        ImageButton commentButton4 = (ImageButton) findViewById(R.id.activity_history_comment_btn4);
+
+        FrameLayout frameLayout5 = (FrameLayout) findViewById(R.id.activity_history_framelayout5);
+        TextView textView5 = (TextView) findViewById(R.id.activity_history_textview5);
+        ImageButton commentButton5 = (ImageButton) findViewById(R.id.activity_history_comment_btn5);
+
+        FrameLayout frameLayout6 = (FrameLayout) findViewById(R.id.activity_history_framelayout6);
+        TextView textView6 = (TextView) findViewById(R.id.activity_history_textview6);
+        ImageButton commentButton6 = (ImageButton) findViewById(R.id.activity_history_comment_btn6);
+
+        FrameLayout frameLayout7 = (FrameLayout) findViewById(R.id.activity_history_framelayout7);
+        TextView textView7 = (TextView) findViewById(R.id.activity_history_textview7);
+        ImageButton commentButton7 = (ImageButton) findViewById(R.id.activity_history_comment_btn7);
+
+        FrameLayout [] frameLayouts = {frameLayout1, frameLayout2, frameLayout3, frameLayout4, frameLayout5, frameLayout6, frameLayout7};
+        TextView [] textViews = {textView1, textView2, textView3, textView4, textView5, textView6, textView7};
+        ImageButton [] commentButtons = {commentButton1, commentButton2, commentButton3, commentButton4, commentButton5, commentButton6, commentButton7};
+
+        for (int i = 0; i < frameLayouts.length; i++){
+            configureFrameLayout(frameLayouts[i], i+1);
+            setTextView(textViews[i], i+1);
+            configureCommentButton(commentButtons[i], i+1);
         }
-    }*/
+    }
 
     private void configureFrameLayout(FrameLayout frameLayout, int numDay){
         int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, numDay);
@@ -77,7 +91,8 @@ public class HistoryActivity extends AppCompatActivity {
             imgbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(HistoryActivity.this, "Le message du jour" + numDay + "était blabla", Toast.LENGTH_LONG).show();
+                    String comment = mWeeklyMoods.getDailyComment(mPreferences, numDay);
+                    Toast.makeText(HistoryActivity.this, comment, Toast.LENGTH_LONG).show();
                 }   });
         }else{
             imgbtn.setVisibility(ImageButton.INVISIBLE);
