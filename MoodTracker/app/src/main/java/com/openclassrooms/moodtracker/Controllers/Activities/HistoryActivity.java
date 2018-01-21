@@ -66,7 +66,8 @@ public class HistoryActivity extends AppCompatActivity {
         textView.getLayoutParams().width = viewSize[dailyMood];
 
         //Set Comment icon if comment exists
-        if(!mWeeklyMoods.getDailyComment(mPreferences, i).equals(""))
-            //Show button + if clic on button, show Comment (Toast)
+        if(!mWeeklyMoods.getDailyComment(mPreferences, i).equals("")){
+            //Show button + if click on button, show Comment (Toast)
+        }
     }
 }

@@ -126,18 +126,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Save Text in EditText as a comment when Validate clicked
-        final EditText validateComments = (EditText) commentPopupView.findViewById((R.id.activity_main_comment_popup_validate_edittext));
+        final EditText commentsText = (EditText) commentPopupView.findViewById((R.id.activity_main_comment_popup_validate_edittext));
 
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //getComment from EditText
-                String dailyComment = validateComments.getText().toString();
+                String dailyComment = commentsText.getText().toString();
 
-                //Save the comment
-                mTodayMood.setDailyComment(mPreferences, 0, dailyComment);
-                mPopupWindow.dismiss();
-                Toast.makeText(MainActivity.this, "Commentaire enregistré", Toast.LENGTH_SHORT).show();
+                if(!dailyComment.equals("")){
+                    //Save the comment
+                    mTodayMood.setDailyComment(mPreferences, 0, dailyComment);
+                    mPopupWindow.dismiss();
+                    Toast.makeText(MainActivity.this, "Commentaire enregistré", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Ecrivez votre commentaire", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
