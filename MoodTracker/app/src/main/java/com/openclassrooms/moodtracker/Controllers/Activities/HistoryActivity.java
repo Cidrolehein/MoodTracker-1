@@ -8,9 +8,12 @@ import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.R;
@@ -31,43 +34,54 @@ public class HistoryActivity extends AppCompatActivity {
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mWeeklyMoods.setDailyComment(mPreferences, 1, "Hier");
 
-        this.configureTextViews();
+        FrameLayout frameLayout1 = (FrameLayout) findViewById(R.id.activity_history_framelayout1);
+        TextView textView1 = (TextView) findViewById(R.id.activity_history_textview1);
+        ImageButton imageButton1 = (ImageButton) findViewById(R.id.activity_history_comment_btn1);
+
+        configureFrameLayout(frameLayout1, 1);
+        setTextView(textView1, 1);
+        configureCommentButton(imageButton1, 1);
+
+        FrameLayout frameLayout2 = (FrameLayout) findViewById(R.id.activity_history_framelayout2);
+        TextView textView2 = (TextView) findViewById(R.id.activity_history_textview2);
+        ImageButton imageButton2 = (ImageButton) findViewById(R.id.activity_history_comment_btn2);
+
+        configureFrameLayout(frameLayout2, 2);
+        setTextView(textView2, 2);
+        configureCommentButton(imageButton2, 2);
     }
 
+    /*
     private void configureTextViews(){
-        //Serialize all TextViews
-        TextView [] textViews = {(TextView) findViewById(R.id.activity_history_text_view_1),
-                                 (TextView) findViewById(R.id.activity_history_text_view_2),
-                                 (TextView) findViewById(R.id.activity_history_text_view_3),
-                                 (TextView) findViewById(R.id.activity_history_text_view_4),
-                                 (TextView) findViewById(R.id.activity_history_text_view_5),
-                                 (TextView) findViewById(R.id.activity_history_text_view_6),
-                                 (TextView) findViewById(R.id.activity_history_text_view_7)};
-
-        ImageButton commentBtn = (ImageButton) findViewById(R.id.activity_history_comment_btn);
-
         //Set all TextViews
-        for (int i = 1; i < textViews.length + 1; i++){
-            setTextView(textViews[i-1], i);
+        for (int i = 0; i < frameLayouts.length + 1; i++){
+            setFrameLayout(frameLayouts[i], i);
         }
+    }*/
+
+    private void configureFrameLayout(FrameLayout frameLayout, int numDay){
+        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, numDay);
+        frameLayout.setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[dailyMood]);
+        frameLayout.getLayoutParams().width = viewSize[dailyMood];
     }
 
-    private void setTextView(TextView textView, int i){
+    private void setTextView(TextView textView, int numDay){
+        textView.setText(getResources().getStringArray(R.array.dayCount)[numDay-1]);
+    }
 
-        //set Text and Padding
-        textView.setText(getResources().getStringArray(R.array.dayCount)[i-1]);
-        textView.setTextSize(20);
-        textView.setPadding(10,0,0,0);
-
-        //Set BackgroundColor and width according to Day Mood
-        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, i);
-
-        textView.setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[dailyMood]);
-        textView.getLayoutParams().width = viewSize[dailyMood];
-
-        //Set Comment icon if comment exists
-        if(!mWeeklyMoods.getDailyComment(mPreferences, i).equals("")){
+    private void configureCommentButton(ImageButton imgbtn, final int numDay){
+        //Set Comment button if comment exists
+        if(!mWeeklyMoods.getDailyComment(mPreferences, numDay).equals("")){
             //Show button + if click on button, show Comment (Toast)
+            imgbtn.setVisibility(ImageButton.VISIBLE);
+            imgbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(HistoryActivity.this, "Le message du jour" + numDay + "était blabla", Toast.LENGTH_LONG).show();
+                }   });
+        }else{
+            imgbtn.setVisibility(ImageButton.INVISIBLE);
         }
     }
+
 }

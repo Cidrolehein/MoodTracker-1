@@ -1,60 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.openclassrooms.moodtracker.Controllers.Activities.HistoryActivity"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/activity_history_text_view_7"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_history_framelayout1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/activity_history_textview1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp" />
 
-    <TextView
-        android:id="@+id/activity_history_text_view_6"
+        <ImageButton
+            android:id="@+id/activity_history_comment_btn1"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_comment_black_48px"
+            android:layout_gravity="end"
+            android:layout_marginEnd="30dp"
+            android:contentDescription="Comment Button"/>
+    </FrameLayout>
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_history_framelayout2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/activity_history_textview2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp" />
 
-    <TextView
-        android:id="@+id/activity_history_text_view_5"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-
-    <TextView
-        android:id="@+id/activity_history_text_view_4"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-
-    <TextView
-        android:id="@+id/activity_history_text_view_3"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-
-    <TextView
-        android:id="@+id/activity_history_text_view_2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-
-    <TextView
-        android:id="@+id/activity_history_text_view_1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        <ImageButton
+            android:id="@+id/activity_history_comment_btn2"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_comment_black_48px"
+            android:layout_gravity="end"
+            android:layout_marginEnd="30dp"
+            android:contentDescription="Comment Button"/>
+    </FrameLayout>
 
 </LinearLayout>
