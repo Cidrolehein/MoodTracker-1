@@ -80,6 +80,7 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void setTextView(TextView textView, int numDay){
+        textView.setTextSize(20);
         textView.setText(getResources().getStringArray(R.array.dayCount)[numDay-1]);
     }
 

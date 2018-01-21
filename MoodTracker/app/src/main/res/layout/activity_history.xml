@@ -9,19 +9,19 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_history_framelayout7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/activity_history_textview7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="20sp"
             android:layout_marginStart="10dp" />
 
         <ImageButton
             android:id="@+id/activity_history_comment_btn7"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_comment_black_48px"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
@@ -32,7 +32,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_history_framelayout6"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/activity_history_textview6"
@@ -44,7 +45,7 @@
         <ImageButton
             android:id="@+id/activity_history_comment_btn6"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_comment_black_48px"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
@@ -55,7 +56,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_history_framelayout5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/activity_history_textview5"
@@ -67,7 +69,7 @@
         <ImageButton
             android:id="@+id/activity_history_comment_btn5"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_comment_black_48px"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
@@ -78,7 +80,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_history_framelayout4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/activity_history_textview4"
@@ -90,7 +93,7 @@
         <ImageButton
             android:id="@+id/activity_history_comment_btn4"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_comment_black_48px"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
@@ -101,7 +104,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_history_framelayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/activity_history_textview3"
@@ -113,7 +117,7 @@
         <ImageButton
             android:id="@+id/activity_history_comment_btn3"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_comment_black_48px"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
@@ -124,7 +128,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_history_framelayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/activity_history_textview2"
@@ -136,7 +141,7 @@
         <ImageButton
             android:id="@+id/activity_history_comment_btn2"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_comment_black_48px"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
@@ -147,7 +152,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_history_framelayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/activity_history_textview1"
@@ -159,7 +165,7 @@
         <ImageButton
             android:id="@+id/activity_history_comment_btn1"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_comment_black_48px"
             android:layout_gravity="end"
             android:layout_marginEnd="30dp"
