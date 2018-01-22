@@ -2,13 +2,13 @@
     <string name="app_name">MoodTracker</string>
 
     <string-array name="dayCount">
-        <item>"Hier"</item>
-        <item>"Avant-hier"</item>
-        <item>"Il y a 3 jours"</item>
-        <item>"Il y a 4 jours"</item>
-        <item>"Il y a 5 jours"</item>
-        <item>"Il y a 6 jours"</item>
         <item>"Il y a une semaine"</item>
+        <item>"Il y a 6 jours"</item>
+        <item>"Il y a 5 jours"</item>
+        <item>"Il y a 4 jours"</item>
+        <item>"Il y a 3 jours"</item>
+        <item>"Avant-hier"</item>
+        <item>"Hier"</item>
     </string-array>
 
     <string name="main_commentPopup_hint">"Écrivez un commentaire"</string>

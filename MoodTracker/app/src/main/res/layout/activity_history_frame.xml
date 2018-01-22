@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_history_framelayout"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <TextView
+        android:id="@+id/activity_history_textview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/activity_history_comment_btn"
+        android:layout_width="@dimen/history_commentBtn_width"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_comment_black_48px"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/history_commentBtn_marginEnd"
+        android:contentDescription="@string/history_commentBtn_description"/>
+
+</FrameLayout>
