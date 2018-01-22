@@ -2,8 +2,8 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_main_comment_popup"
-    android:layout_width="250dp"
-    android:layout_height="200dp"
+    android:layout_width="@dimen/main_commentPopup_layout_width"
+    android:layout_height="@dimen/main_commentPopup_layout_height"
     android:background="@android:color/white">
 
     <EditText
@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:inputType="text"
-        android:hint="Commentaire"
-        android:textColorHighlight="@color/colorAccent"
+        android:hint="@string/main_commentPopup_hint"
         />
 
     <Button
@@ -22,15 +21,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:textColor="@color/colorAccent"
-        android:text="Valider"/>
+        android:text="@string/main_commentPopup_validate"/>
 
     <Button
         android:id="@+id/activity_main_comment_popup_cancel_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="@dimen/main_commentPopup_cancelBtn_marginEnd"
         android:textColor="@color/colorAccent"
-        android:text="Annuler"/>
+        android:text="@string/main_commentPopup_cancel"/>
 
 </FrameLayout>

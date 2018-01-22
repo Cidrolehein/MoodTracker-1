@@ -9,23 +9,23 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_history_framelayout7"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="@dimen/history_frameLayout_height"
+        android:layout_weight="@dimen/history_frameLayout_weight">
 
         <TextView
             android:id="@+id/activity_history_textview7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp" />
+            android:layout_marginStart="@dimen/history_textView_marginStart" />
 
         <ImageButton
             android:id="@+id/activity_history_comment_btn7"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/history_commentBtn_width"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_comment_black_48px"
             android:layout_gravity="end"
-            android:layout_marginEnd="30dp"
-            android:contentDescription="Comment Button"/>
+            android:layout_marginEnd="@dimen/history_commentBtn_marginEnd"
+            android:contentDescription="@string/history_commentBtn_description"/>
     </FrameLayout>
 
     <FrameLayout

@@ -3,8 +3,6 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_main_frame_layout"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="horizontal">
@@ -16,19 +14,19 @@
 
     <Button
         android:id="@+id/activity_main_comment_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/main_btn_width"
+        android:layout_height="@dimen/main_btn_height"
         android:background="@drawable/ic_note_add_black"
         android:layout_gravity="bottom|start"
-        android:layout_margin="15dp"
+        android:layout_margin="@dimen/main_btn_margin"
         />
 
     <Button
         android:id="@+id/activity_main_history_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/main_btn_width"
+        android:layout_height="@dimen/main_btn_height"
         android:background="@drawable/ic_history_black"
         android:layout_gravity="bottom|end"
-        android:layout_margin="15dp"/>
+        android:layout_margin="@dimen/main_btn_margin"/>
 
 </FrameLayout>
