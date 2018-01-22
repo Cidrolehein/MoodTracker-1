@@ -8,9 +8,8 @@ import android.content.SharedPreferences;
 
 public class WeeklyMoods {
 
-    public int getDailyMood(SharedPreferences prefsFile, int numDay) {
-        int dailyMood = prefsFile.getInt("day"+numDay, 3);
-        return dailyMood;
+    public void setDailyComment(SharedPreferences prefsFile, int numDay, String dailyComment){
+        prefsFile.edit().putString("comment"+numDay, dailyComment).apply();
     }
 
     public String getDailyComment(SharedPreferences prefsFile, int numDay){
@@ -22,8 +21,9 @@ public class WeeklyMoods {
         prefsFile.edit().putInt("day"+numDay, dailyMood).apply();
     }
 
-    public void setDailyComment(SharedPreferences prefsFile, int numDay, String dailyComment){
-        prefsFile.edit().putString("comment"+numDay, dailyComment).apply();
+    public int getDailyMood(SharedPreferences prefsFile, int numDay) {
+        int dailyMood = prefsFile.getInt("day"+numDay, 3);
+        return dailyMood;
     }
 
     public void updateWeeklyMoods(SharedPreferences prefsFile){
