@@ -3,7 +3,6 @@ package com.openclassrooms.moodtracker.Controllers.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -31,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private VerticalViewPager viewPager;
     private Button mCommentButton;
     private Button mHistoryButton;
+    private Button cancelButton;
+    private Button validateButton;
+    private EditText commentsText;
 
     private WeeklyMoods mTodayMood;
     private int intTodayMood;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mHistoryButton = (Button) findViewById(R.id.activity_main_history_button);
         mMainLayout = (FrameLayout) findViewById(R.id.activity_main_frame_layout);
         mContext = getApplicationContext();
-        this.configureButtons();
+        this.configureCommentAndHistoryButtons();
 
         //Configure ViewPager if same day (get last saved mood) or new day (default mood)
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
@@ -69,14 +71,6 @@ public class MainActivity extends AppCompatActivity {
         mTodayMood.setDailyMood(mPreferences, 0, position);
     }
 
-    private void configureViewPager() {
-        viewPager = (VerticalViewPager) findViewById(R.id.activity_main_viewpager);
-        viewPager.setAdapter(new PageAdapter(
-                getSupportFragmentManager(),
-                getResources().getIntArray(R.array.colorPagesViewPager), smileys) {});
-        viewPager.setCurrentItem(intTodayMood);
-    }
-
     private void configureDailyMoodWithDate (SharedPreferences prefsFile, int currentDay, WeeklyMoods wm){
         //Get savedDay
         int savedDay = prefsFile.getInt("Today", currentDay);
@@ -87,7 +81,15 @@ public class MainActivity extends AppCompatActivity {
         this.configureViewPager();
     }
 
-    private void configureButtons(){
+    private void configureViewPager() {
+        viewPager = (VerticalViewPager) findViewById(R.id.activity_main_viewpager);
+        viewPager.setAdapter(new PageAdapter(
+                getSupportFragmentManager(),
+                getResources().getIntArray(R.array.colorPagesViewPager), smileys) {});
+        viewPager.setCurrentItem(intTodayMood);
+    }
+
+    private void configureCommentAndHistoryButtons(){
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,12 +103,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Show Popup Window when Comment Button clicked
-                showPopupWindow();
+                configureCommentPopupWindow();
             }
         });
     }
 
-    private void showPopupWindow(){
+    private void configureCommentPopupWindow(){
         // Initialize a new instance of LayoutInflater service
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
         // Inflate the custom layout/view
@@ -116,9 +118,18 @@ public class MainActivity extends AppCompatActivity {
         mPopupWindow = new PopupWindow(commentPopupView, 800, 600, true);
 
         // Get a reference for the close and validate buttons
-        Button cancelButton = (Button) commentPopupView.findViewById(R.id.activity_main_comment_popup_cancel_btn);
-        Button validateButton = (Button) commentPopupView.findViewById(R.id.activity_main_comment_popup_validate_btn);
+        cancelButton = (Button) commentPopupView.findViewById(R.id.activity_main_comment_popup_cancel_btn);
+        validateButton = (Button) commentPopupView.findViewById(R.id.activity_main_comment_popup_validate_btn);
+        commentsText = (EditText) commentPopupView.findViewById((R.id.activity_main_comment_popup_validate_edittext));
 
+        configureCommentCancelButton();
+        configureCommentValidateButton();
+
+        //Positions popup window
+        mPopupWindow.showAtLocation(mMainLayout, Gravity.TOP,0,0);
+    }
+
+    private void configureCommentCancelButton(){
         // Set a click listener for the popup window close button
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,10 +138,10 @@ public class MainActivity extends AppCompatActivity {
                 mPopupWindow.dismiss();
             }
         });
+    }
 
+    private void configureCommentValidateButton(){
         //Save Text in EditText as a comment when Validate clicked
-        final EditText commentsText = (EditText) commentPopupView.findViewById((R.id.activity_main_comment_popup_validate_edittext));
-
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,8 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //Positions popup window
-        mPopupWindow.showAtLocation(mMainLayout, Gravity.TOP,0,0);
     }
+
+
 }
