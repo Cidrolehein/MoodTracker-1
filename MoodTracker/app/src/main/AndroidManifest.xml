@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controllers.Activities.HistoryActivity"></activity>
+        <activity android:name=".Controllers.Activities.HistoryActivity" />
+        <activity android:name=".Controllers.Activities.HistoryPieChartActivity"></activity>
     </application>
 
 </manifest>

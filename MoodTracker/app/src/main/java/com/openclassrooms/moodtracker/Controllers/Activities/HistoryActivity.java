@@ -1,23 +1,27 @@
 package com.openclassrooms.moodtracker.Controllers.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
 import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.R;
 
 public class HistoryActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
+    private Button mPieChartButton;
 
     private WeeklyMoods mWeeklyMoods = new WeeklyMoods();
     private int [] viewSize = {250, 500, 750, 1000, 1250};
@@ -26,10 +30,11 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-
+        mPieChartButton = (Button) findViewById(R.id.activity_history_piechart_button);
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
 
         configureWeeklyMoods();
+        configurePieChartButton();
     }
 
     private void configureWeeklyMoods(){
@@ -72,5 +77,16 @@ public class HistoryActivity extends AppCompatActivity {
             //Create new view and add it to the container (LinearLayout)
             container.addView(views[i]);
         }
+    }
+
+    private void configurePieChartButton() {
+        mPieChartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Start Activity History when History Button clicked
+                Intent pieChartActivityIntent = new Intent(HistoryActivity.this, HistoryPieChartActivity.class);
+                startActivity(pieChartActivityIntent);
+            }
+        });
     }
 }
