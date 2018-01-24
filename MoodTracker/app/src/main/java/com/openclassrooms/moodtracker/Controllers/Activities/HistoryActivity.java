@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.PieChart;
 import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.R;
 
@@ -30,10 +29,11 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-        mPieChartButton = (Button) findViewById(R.id.activity_history_piechart_button);
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
 
         configureWeeklyMoods();
+        mPieChartButton = (Button) findViewById(R.id.activity_history_piechart_button);
+
         configurePieChartButton();
     }
 
@@ -77,6 +77,8 @@ public class HistoryActivity extends AppCompatActivity {
             //Create new view and add it to the container (LinearLayout)
             container.addView(views[i]);
         }
+        View piechartView = inflater.inflate(R.layout.activity_history_piechart_btn, null);
+        container.addView(piechartView);
     }
 
     private void configurePieChartButton() {
