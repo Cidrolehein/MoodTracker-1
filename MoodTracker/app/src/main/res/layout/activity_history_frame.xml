@@ -3,13 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_history_framelayout"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/activity_history_textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="20sp" />
+        android:textSize="@dimen/history_textview_textSize"
+        android:layout_marginStart="@dimen/history_textView_marginStart"/>
 
     <ImageButton
         android:id="@+id/activity_history_comment_btn"
