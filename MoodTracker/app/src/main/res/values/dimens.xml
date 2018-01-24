@@ -9,9 +9,10 @@
     <dimen name="main_commentPopup_cancelBtn_marginEnd">10dp</dimen>
 
     <dimen name="history_textView_marginStart">10dp</dimen>
+    <dimen name="history_textview_textSize">20sp</dimen>
+
     <dimen name="history_commentBtn_width">50dp</dimen>
     <dimen name="history_commentBtn_marginEnd">30dp</dimen>
-    <dimen name="history_textview_textSize">20sp</dimen>
 
     <dimen name="main_smiley_imageView">100dp</dimen>
 

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MoodTracker</string>
 
+    <string name="fragment_contentDesc">smiley</string>
+
     <string-array name="dayCount">
         <item>"Il y a une semaine"</item>
         <item>"Il y a 6 jours"</item>

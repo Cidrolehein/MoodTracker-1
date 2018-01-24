@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/smiley_happy"
-        android:padding="@dimen/main_smiley_imageView" />
+        android:padding="@dimen/main_smiley_imageView"
+        android:contentDescription="@string/fragment_contentDesc"/>
 
 </LinearLayout>

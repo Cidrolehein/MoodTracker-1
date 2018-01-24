@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private int currentDay;
 
-    int[] smileys = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
+    private final int[] smileys = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
 
 
 

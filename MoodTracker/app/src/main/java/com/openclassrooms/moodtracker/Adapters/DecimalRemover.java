@@ -12,9 +12,8 @@ import java.text.DecimalFormat;
 
 public class DecimalRemover extends PercentFormatter {
 
-    protected DecimalFormat mFormat;
-
     public DecimalRemover(DecimalFormat format) {
+        DecimalFormat mFormat;
         this.mFormat = format;
     }
 

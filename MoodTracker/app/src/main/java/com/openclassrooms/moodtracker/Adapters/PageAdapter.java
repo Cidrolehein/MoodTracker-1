@@ -12,8 +12,8 @@ import com.openclassrooms.moodtracker.Controllers.Fragments.PageFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
-    private int [] colors;
-    private int [] smileys;
+    private final int [] colors;
+    private final int [] smileys;
 
     protected PageAdapter(FragmentManager fm, int[] colors, int [] smileys) {
         super(fm);

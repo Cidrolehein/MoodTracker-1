@@ -13,8 +13,7 @@ public class WeeklyMoods {
     }
 
     public String getDailyComment(SharedPreferences prefsFile, int numDay){
-        String dailyComment = prefsFile.getString("comment"+numDay, "");
-        return dailyComment;
+        return prefsFile.getString("comment"+numDay, "");
     }
 
     public void setDailyMood(SharedPreferences prefsFile, int numDay, int dailyMood) {
@@ -22,8 +21,7 @@ public class WeeklyMoods {
     }
 
     public int getDailyMood(SharedPreferences prefsFile, int numDay) {
-        int dailyMood = prefsFile.getInt("day"+numDay, 3);
-        return dailyMood;
+        return prefsFile.getInt("day"+numDay, 3);
     }
 
     public void updateWeeklyMoods(SharedPreferences prefsFile){

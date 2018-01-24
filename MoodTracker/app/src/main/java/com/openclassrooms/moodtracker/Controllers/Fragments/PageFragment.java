@@ -3,10 +3,6 @@ package com.openclassrooms.moodtracker.Controllers.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.ImageViewCompat;
-import android.support.v4.widget.TextViewCompat;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

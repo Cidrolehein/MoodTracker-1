@@ -19,17 +19,14 @@ import java.util.List;
 
 public class HistoryPieChartActivity extends AppCompatActivity {
 
-    SharedPreferences mPreferences;
-    WeeklyMoods mDailyMood;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_pie_chart);
 
         PieChart pieChart = (PieChart)findViewById(R.id.activity_history_piechart);
-        mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
-        mDailyMood = new WeeklyMoods();
+        SharedPreferences mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
+        WeeklyMoods mDailyMood = new WeeklyMoods();
 
         float [] moods = new float[5];
 
@@ -60,7 +57,7 @@ public class HistoryPieChartActivity extends AppCompatActivity {
 
         String [] moodLabels = {"Sad", "Disappointed", "Normal", "Happy", "SuperHappy"};
         int [] colors = getResources().getIntArray(R.array.colorPagesViewPager);
-        List<Integer> moodColors = new ArrayList<Integer>();
+        List<Integer> moodColors = new ArrayList<>();
         List<PieEntry> entries = new ArrayList<>();
 
         for(int i = 0; i<moods.length; i++){

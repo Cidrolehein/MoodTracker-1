@@ -23,8 +23,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
 
-    private WeeklyMoods mWeeklyMoods = new WeeklyMoods();
-    private double [] viewSizeDivider = {3, 2.5, 2, 1.5, 1};;
+    private final WeeklyMoods mWeeklyMoods = new WeeklyMoods();
+    private final double [] viewSizeDivider = {3, 2.5, 2, 1.5, 1};
     private double deviceWidth;
     private double deviceHeight;
 
@@ -90,11 +90,10 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void showCommentButton(ImageButton commentBtn, int numDay){
-        ImageButton commentButton = commentBtn;
         //Show button + if click on button, show Comment (Toast)
-        commentButton.setVisibility(ImageButton.VISIBLE);
+        commentBtn.setVisibility(ImageButton.VISIBLE);
         final int finalI = numDay;
-        commentButton.setOnClickListener(new View.OnClickListener() {
+        commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String comment = mWeeklyMoods.getDailyComment(mPreferences, finalI+1);
@@ -104,16 +103,13 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void configureFrameLayout(View v, int numDay){
 
-        View view = v;
-        int i = numDay;
-
         //Get Mood of the day [i]
-        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, i+1);
+        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, numDay+1);
 
         //Serialize FrameLayouts, TextViews and Buttons
-        FrameLayout frameLayout = (FrameLayout)view.findViewById(R.id.activity_history_framelayout);
-        TextView textView = (TextView)view.findViewById(R.id.activity_history_textview);
-        ImageButton commentButton = (ImageButton)view.findViewById(R.id.activity_history_comment_btn);
+        FrameLayout frameLayout = (FrameLayout)v.findViewById(R.id.activity_history_framelayout);
+        TextView textView = (TextView)v.findViewById(R.id.activity_history_textview);
+        ImageButton commentButton = (ImageButton)v.findViewById(R.id.activity_history_comment_btn);
 
         //Define FrameLayout width and height with device width and height
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -125,11 +121,11 @@ public class HistoryActivity extends AppCompatActivity {
         frameLayout.setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[dailyMood]);
 
         //Set TextView according to Mood
-        textView.setText(getResources().getStringArray(R.array.dayCount)[i]);
+        textView.setText(getResources().getStringArray(R.array.dayCount)[numDay]);
 
         //Set Comment button if comment exists
-        if(!mWeeklyMoods.getDailyComment(mPreferences, i+1).equals("")){
-            showCommentButton(commentButton, i);
+        if(!mWeeklyMoods.getDailyComment(mPreferences, numDay+1).equals("")){
+            showCommentButton(commentButton, numDay);
         }else{
             commentButton.setVisibility(ImageButton.INVISIBLE);
         }

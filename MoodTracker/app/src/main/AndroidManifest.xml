@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Controllers.Activities.HistoryActivity" />
-        <activity android:name=".Controllers.Activities.HistoryPieChartActivity"></activity>
+        <activity android:name=".Controllers.Activities.HistoryPieChartActivity"/>
     </application>
 
 </manifest>
