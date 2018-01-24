@@ -52,7 +52,7 @@ public class HistoryActivity extends AppCompatActivity {
             ImageButton commentButton = (ImageButton)views[i].findViewById(R.id.activity_history_comment_btn);
 
             //Set TextView according to Mood
-            int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, i);
+            int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, i+1);
             textView.setText(getResources().getStringArray(R.array.dayCount)[i]);
             textView.setLayoutParams(new FrameLayout.LayoutParams(viewSize[dailyMood],
                     150));
@@ -60,14 +60,14 @@ public class HistoryActivity extends AppCompatActivity {
             textView.setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[dailyMood]);
 
             //Set Comment button if comment exists
-            if(!mWeeklyMoods.getDailyComment(mPreferences, i).equals("")){
+            if(!mWeeklyMoods.getDailyComment(mPreferences, i+1).equals("")){
                 //Show button + if click on button, show Comment (Toast)
                 commentButton.setVisibility(ImageButton.VISIBLE);
                 final int finalI = i;
                 commentButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String comment = mWeeklyMoods.getDailyComment(mPreferences, finalI);
+                        String comment = mWeeklyMoods.getDailyComment(mPreferences, finalI+1);
                         Toast.makeText(HistoryActivity.this, comment, Toast.LENGTH_LONG).show();
                     }   });
             }else{
