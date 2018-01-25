@@ -60,9 +60,11 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         this.configureCommentAndHistoryButtons();
 
+
         //Configure ViewPager if same day (get last saved mood) or new day (default mood)
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mTodayMood = new WeeklyMoods();
+
         currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         this.configureDailyMoodWithDate(mPreferences, currentDay, mTodayMood);
     }
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
         getDeviceMetrics();
         // Initialize a new instance of popup window
-        mPopupWindow = new PopupWindow(commentPopupView, (int)(deviceWidth/1.2), (int)(deviceHeight/2), true);
+        mPopupWindow = new PopupWindow(commentPopupView, (int)(deviceWidth/1.2), (int)(deviceHeight/3), true);
 
         // Get a reference for the close and validate buttons
         cancelButton = (Button) commentPopupView.findViewById(R.id.activity_main_comment_popup_cancel_btn);

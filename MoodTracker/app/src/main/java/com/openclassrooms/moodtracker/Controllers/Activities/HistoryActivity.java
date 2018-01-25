@@ -92,19 +92,19 @@ public class HistoryActivity extends AppCompatActivity {
     private void showCommentButton(ImageButton commentBtn, int numDay){
         //Show button + if click on button, show Comment (Toast)
         commentBtn.setVisibility(ImageButton.VISIBLE);
-        final int finalI = numDay;
+        final int finalI = 7 - numDay;
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String comment = mWeeklyMoods.getDailyComment(mPreferences, finalI+1);
-                Toast.makeText(HistoryActivity.this, comment, Toast.LENGTH_LONG).show();
+                String comment = mWeeklyMoods.getDailyComment(mPreferences, finalI);
+                Toast.makeText(HistoryActivity.this, comment, Toast.LENGTH_SHORT).show();
             }}   );
         }
 
     private void configureFrameLayout(View v, int numDay){
 
         //Get Mood of the day [i]
-        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, numDay+1);
+        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, (7 - numDay));
 
         //Serialize FrameLayouts, TextViews and Buttons
         FrameLayout frameLayout = (FrameLayout)v.findViewById(R.id.activity_history_framelayout);
@@ -120,11 +120,11 @@ public class HistoryActivity extends AppCompatActivity {
         frameLayout.setLayoutParams(params);
         frameLayout.setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[dailyMood]);
 
-        //Set TextView according to Mood
+        //Set TextView according to Day
         textView.setText(getResources().getStringArray(R.array.dayCount)[numDay]);
 
         //Set Comment button if comment exists
-        if(!mWeeklyMoods.getDailyComment(mPreferences, numDay+1).equals("")){
+        if(!mWeeklyMoods.getDailyComment(mPreferences, (7 - numDay)).equals("")){
             showCommentButton(commentButton, numDay);
         }else{
             commentButton.setVisibility(ImageButton.INVISIBLE);
