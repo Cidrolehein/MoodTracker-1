@@ -24,7 +24,7 @@ public class HistoryActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
 
     private final WeeklyMoods mWeeklyMoods = new WeeklyMoods();
-    private final double [] viewSizeDivider = {3, 2.5, 2, 1.5, 1};
+    private final double [] viewSizeMultiplier = {0.25, 0.4, 0.6, 0.8, 1};
     private double deviceWidth;
     private double deviceHeight;
 
@@ -113,7 +113,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         //Define FrameLayout width and height with device width and height
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                (int) (deviceWidth/viewSizeDivider[dailyMood]),
+                (int) (deviceWidth*viewSizeMultiplier[dailyMood]),
                 (int) deviceHeight/9);
 
         //Set FrameLayout
