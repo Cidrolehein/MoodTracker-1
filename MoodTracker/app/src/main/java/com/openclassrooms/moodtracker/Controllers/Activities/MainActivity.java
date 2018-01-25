@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -38,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private int intTodayMood;
     private SharedPreferences mPreferences;
     private int currentDay;
+
+    private double deviceWidth;
+    private double deviceHeight;
 
     private final int[] smileys = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
 
@@ -114,8 +119,9 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the custom layout/view
         View commentPopupView = inflater.inflate(R.layout.activity_main_comment_popup,null);
 
+        getDeviceMetrics();
         // Initialize a new instance of popup window
-        mPopupWindow = new PopupWindow(commentPopupView, 800, 600, true);
+        mPopupWindow = new PopupWindow(commentPopupView, (int)(deviceWidth/1.2), (int)(deviceHeight/2), true);
 
         // Get a reference for the close and validate buttons
         cancelButton = (Button) commentPopupView.findViewById(R.id.activity_main_comment_popup_cancel_btn);
@@ -160,5 +166,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void getDeviceMetrics(){
+        //Get Device Width and Height
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowmanager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+        deviceWidth = displayMetrics.widthPixels;
+        deviceHeight = displayMetrics.heightPixels;
+    }
 
 }
