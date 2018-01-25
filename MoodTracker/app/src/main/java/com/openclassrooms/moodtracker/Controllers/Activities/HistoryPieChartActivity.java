@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -55,7 +56,7 @@ public class HistoryPieChartActivity extends AppCompatActivity {
             moods[i] = moods[i] / 7 * 100;
         }
 
-        String [] moodLabels = {"Sad", "Disappointed", "Normal", "Happy", "SuperHappy"};
+        String [] moodLabels = {"Tristesse", "Déception", "Normal", "Satisfaction", "Bonheur"};
         int [] colors = getResources().getIntArray(R.array.colorPagesViewPager);
         List<Integer> moodColors = new ArrayList<>();
         List<PieEntry> entries = new ArrayList<>();
@@ -68,8 +69,7 @@ public class HistoryPieChartActivity extends AppCompatActivity {
         }
 
         Legend legend = pieChart.getLegend();
-        legend.setEnabled(false);
-        pieChart.setDescription(null);
+        legend.setEnabled(true);
 
 
         PieDataSet set = new PieDataSet(entries, "");
@@ -77,6 +77,7 @@ public class HistoryPieChartActivity extends AppCompatActivity {
 
         PieData data = new PieData(set);
         pieChart.setData(data);
+        pieChart.setDescription(null);
         data.setValueFormatter(new DecimalRemover(new DecimalFormat("###,###,###")));
         pieChart.invalidate(); // refresh
     }
