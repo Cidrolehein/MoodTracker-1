@@ -24,7 +24,7 @@ public class WeeklyMoods {
         return prefsFile.getInt("day"+numDay, 3);
     }
 
-    public void updateWeeklyMoods(SharedPreferences prefsFile){
+    public void updateWeeklyMoods(SharedPreferences prefsFile, int betweenDays){
 
         int [] weeklyMoods = new int [8];
         String [] weeklyComments = new String [8];
@@ -37,8 +37,13 @@ public class WeeklyMoods {
 
         //Move every dailyMoods and dailyComments up one day
         for(int i = 7; i > 0; i--){
-            weeklyMoods[i] = weeklyMoods[i-1];
-            weeklyComments[i] = weeklyComments[i-1];
+            if ((i-betweenDays) >= 0){
+                weeklyMoods[i] = weeklyMoods[i-betweenDays];
+                weeklyComments[i] = weeklyComments[i-betweenDays];
+            }else{
+                weeklyMoods[i] = 3;
+                weeklyComments[i] = "";
+            }
         }
 
         //Save updated weeklyMoods

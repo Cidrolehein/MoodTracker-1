@@ -20,9 +20,14 @@ import com.openclassrooms.moodtracker.Adapters.PageAdapter;
 import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.R;
 
+import java.time.Year;
 import java.util.Calendar;
 
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
+
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private WeeklyMoods mTodayMood;
     private int intTodayMood;
     private SharedPreferences mPreferences;
-    private int currentDay;
+    private int todayYear;
+    private int todayMonth;
+    private int todayDay;
 
     private double deviceWidth;
     private double deviceHeight;
@@ -60,40 +67,74 @@ public class MainActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         this.configureCommentAndHistoryButtons();
 
-
-        //Configure ViewPager if same day (get last saved mood) or new day (default mood)
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mTodayMood = new WeeklyMoods();
 
-        currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        this.configureDailyMoodWithDate(mPreferences, currentDay, mTodayMood);
+        //Get Current Date
+        Calendar.getInstance();
+        todayYear = YEAR;
+        todayMonth = MONTH;
+        todayDay = DAY_OF_MONTH;
+
+        //If not same day, update WeeklyMoods according with the numbers of day since last opening
+        int nbOfDaysSinceLastOpening = betweenDays(mPreferences);
+        if(nbOfDaysSinceLastOpening != 0)
+            mTodayMood.updateWeeklyMoods(mPreferences, nbOfDaysSinceLastOpening);
+
+        //Configure the view pager according to TodayMood (if same day -> saved / if not -> default)
+        intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
+        this.configureViewPager(intTodayMood);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //Save currentDay and currentMood as WeeklyMood[0]
+        //Save current date
+        mPreferences.edit().putInt("Today", todayDay).apply();
+        mPreferences.edit().putInt("Today", todayMonth).apply();
+        mPreferences.edit().putInt("Today", todayYear).apply();
+
+        //Save current mood as WeeklyMood[0]
         int position = viewPager.getCurrentItem();
-        mPreferences.edit().putInt("Today", currentDay).apply();
         mTodayMood.setDailyMood(mPreferences, 0, position);
     }
 
-    private void configureDailyMoodWithDate (SharedPreferences prefsFile, int currentDay, WeeklyMoods wm){
-        //Get savedDay
-        int savedDay = prefsFile.getInt("Today", currentDay);
+    private int betweenDays (SharedPreferences prefsFile){
 
-        //If savedDay is different from today, update WeeklyMoods and Comments and show default mood
-        if(currentDay != savedDay)  wm.updateWeeklyMoods(prefsFile);
-        intTodayMood = wm.getDailyMood(prefsFile, 0);
-        this.configureViewPager();
+        int betweenDays;
+
+        int savedYear = prefsFile.getInt("Today", todayYear);
+        int savedMonth = prefsFile.getInt("Today", todayMonth);
+        int savedDay = prefsFile.getInt("Today", todayDay);
+
+        if(savedYear == todayYear && savedMonth == todayMonth) {
+            betweenDays = todayDay - savedDay;
+        }else if ((todayDay < 7) && (todayYear - savedYear <= 1)
+                && ((todayMonth - savedMonth)==1) || (savedMonth==12 && todayMonth==1)) {
+            int monthNbOfDays = 0;
+            switch(savedMonth) {
+                case 1: case 3 : case 5 : case 7 : case 8 : case 10 : case 12: monthNbOfDays = 31; break;
+                case 4 : case 6 : case 9 : case 11 : monthNbOfDays = 30; break;
+                case 2 : //February
+                    if((savedYear % 4 == 0)&&((savedYear%100 !=0)||(savedYear %400 == 0)))
+                        monthNbOfDays = 29;
+                    else
+                        monthNbOfDays = 28;
+                    break;
+            }
+            betweenDays = todayDay + (monthNbOfDays-savedDay);
+        }else{
+            betweenDays = 7;
+        }
+        return betweenDays;
     }
 
-    private void configureViewPager() {
+    private void configureViewPager(int todayMood) {
         viewPager = (VerticalViewPager) findViewById(R.id.activity_main_viewpager);
         viewPager.setAdapter(new PageAdapter(
                 getSupportFragmentManager(),
                 getResources().getIntArray(R.array.colorPagesViewPager), smileys) {});
-        viewPager.setCurrentItem(intTodayMood);
+        viewPager.setCurrentItem(todayMood);
     }
 
     private void configureCommentAndHistoryButtons(){
