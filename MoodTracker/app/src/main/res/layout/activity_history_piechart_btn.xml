@@ -8,9 +8,7 @@
         android:id="@+id/activity_history_piechart_button"
         android:layout_width="@dimen/main_btn_width"
         android:layout_height="@dimen/main_btn_height"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/ic_pie_chart_outlined_black_24dp"
-        android:layout_margin="@dimen/main_btn_margin"/>
-
+        android:background="@drawable/ic_pie_chart_outlined_black_24dp"/>
 </RelativeLayout>
