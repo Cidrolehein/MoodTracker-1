@@ -31,7 +31,7 @@ public class HistoryPieChartActivity extends AppCompatActivity {
 
         float [] moods = new float[5];
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 8; i++) {
             int mood = mDailyMood.getDailyMood(mPreferences, i);
             switch (mood) {
                 case 0:
