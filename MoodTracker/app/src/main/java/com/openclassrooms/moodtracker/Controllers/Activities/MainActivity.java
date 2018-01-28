@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,8 +79,13 @@ public class MainActivity extends AppCompatActivity {
 
         //If not same day, update WeeklyMoods according with the numbers of day since last opening
         int nbOfDaysSinceLastOpening = betweenDays(mPreferences);
-        if(nbOfDaysSinceLastOpening != 0)
+
+        if(nbOfDaysSinceLastOpening == 0){
+            Log.e("Main", "same day, betweendays = " + nbOfDaysSinceLastOpening );
+        }else{
             mTodayMood.updateWeeklyMoods(mPreferences, nbOfDaysSinceLastOpening);
+            Log.e("Main", "different day, betweendays = " + nbOfDaysSinceLastOpening + "TodayDate:" + todayDay + "/" + todayMonth + "/" + todayYear);
+        }
 
         //Configure the view pager according to TodayMood (if same day -> saved / if not -> default)
         intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
@@ -90,25 +96,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         //Save current date
-        mPreferences.edit().putInt("Today", todayDay).apply();
-        mPreferences.edit().putInt("Today", todayMonth).apply();
-        mPreferences.edit().putInt("Today", todayYear).apply();
+        mPreferences.edit().putInt("TodayDay", todayDay).apply();
+        mPreferences.edit().putInt("TodayMonth", todayMonth).apply();
+        mPreferences.edit().putInt("TodayYear", todayYear).apply();
 
         //Save current mood as WeeklyMood[0]
         int position = viewPager.getCurrentItem();
         mTodayMood.setDailyMood(mPreferences, 0, position);
     }
 
-    private int betweenDays (SharedPreferences prefsFile){
+    private int betweenDays (SharedPreferences prefsFile) {
 
         int betweenDays;
 
-        int savedYear = prefsFile.getInt("Today", todayYear);
-        int savedMonth = prefsFile.getInt("Today", todayMonth);
-        int savedDay = prefsFile.getInt("Today", todayDay);
+        int savedYear = prefsFile.getInt("TodayYear", todayYear);
+        int savedMonth = prefsFile.getInt("TodayMonth", todayMonth);
+        int savedDay = prefsFile.getInt("TodayDay", todayDay);
 
-        if(savedYear == todayYear && savedMonth == todayMonth) {
-            betweenDays = todayDay - savedDay;
+        if (savedYear == todayYear && savedMonth == todayMonth){
+            return todayDay - savedDay;
+
         }else if ((todayDay < 7) && (todayYear - savedYear <= 1)
                 && ((todayMonth - savedMonth)==1) || (savedMonth==12 && todayMonth==1)) {
             int monthNbOfDays = 0;
