@@ -71,17 +71,13 @@ public class MainActivity extends AppCompatActivity {
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mTodayMood = new WeeklyMoods();
 
-        //Get Current Date
-        Calendar.getInstance();
-        todayYear = YEAR;
-        todayMonth = MONTH;
-        todayDay = DAY_OF_MONTH;
+        getCurrentDate();
 
         //If not same day, update WeeklyMoods according with the numbers of day since last opening
         int nbOfDaysSinceLastOpening = betweenDays(mPreferences);
 
         if(nbOfDaysSinceLastOpening == 0){
-            Log.e("Main", "same day, betweendays = " + nbOfDaysSinceLastOpening );
+            Log.e("Main", "same day, betweendays = " + nbOfDaysSinceLastOpening +"TodayDate:" + todayDay + "/" + todayMonth + "/" + todayYear);
         }else{
             mTodayMood.updateWeeklyMoods(mPreferences, nbOfDaysSinceLastOpening);
             Log.e("Main", "different day, betweendays = " + nbOfDaysSinceLastOpening + "TodayDate:" + todayDay + "/" + todayMonth + "/" + todayYear);
@@ -103,6 +99,12 @@ public class MainActivity extends AppCompatActivity {
         //Save current mood as WeeklyMood[0]
         int position = viewPager.getCurrentItem();
         mTodayMood.setDailyMood(mPreferences, 0, position);
+    }
+
+    private void getCurrentDate(){
+        todayYear = Calendar.getInstance().get(Calendar.YEAR);
+        todayMonth = Calendar.getInstance().get(Calendar.MONTH);
+        todayDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     }
 
     private int betweenDays (SharedPreferences prefsFile) {
