@@ -21,14 +21,9 @@ import com.openclassrooms.moodtracker.Adapters.PageAdapter;
 import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.R;
 
-import java.time.Year;
 import java.util.Calendar;
 
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
-
-import static java.util.Calendar.DAY_OF_MONTH;
-import static java.util.Calendar.MONTH;
-import static java.util.Calendar.YEAR;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText commentsText;
 
     private WeeklyMoods mTodayMood;
-    private int intTodayMood;
     private SharedPreferences mPreferences;
     private int todayYear;
     private int todayMonth;
@@ -84,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Configure the view pager according to TodayMood (if same day -> saved / if not -> default)
-        intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
+        int intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
         this.configureViewPager(intTodayMood);
+
     }
 
     @Override
@@ -119,12 +114,12 @@ public class MainActivity extends AppCompatActivity {
             return todayDay - savedDay;
 
         }else if ((todayDay < 7) && (todayYear - savedYear <= 1)
-                && ((todayMonth - savedMonth)==1) || (savedMonth==12 && todayMonth==1)) {
+                && ((todayMonth - savedMonth)==1) || (savedMonth==12 && todayMonth==0)) {
             int monthNbOfDays = 0;
             switch(savedMonth) {
-                case 1: case 3 : case 5 : case 7 : case 8 : case 10 : case 12: monthNbOfDays = 31; break;
-                case 4 : case 6 : case 9 : case 11 : monthNbOfDays = 30; break;
-                case 2 : //February
+                case 0: case 2 : case 4 : case 6 : case 7 : case 9 : case 11: monthNbOfDays = 31; break;
+                case 3 : case 5 : case 8 : case 10 : monthNbOfDays = 30; break;
+                case 1 : //February
                     if((savedYear % 4 == 0)&&((savedYear%100 !=0)||(savedYear %400 == 0)))
                         monthNbOfDays = 29;
                     else
