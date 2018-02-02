@@ -3,6 +3,7 @@ package com.openclassrooms.moodtracker.Controllers.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,6 @@ public class PageFragment extends Fragment {
         ImageView imageView = (ImageView) result.findViewById(R.id.fragment_page_imageview);
 
         //Get position, color and feeling
-        int position = getArguments().getInt(KEY_POSITION, -1);
         int color = getArguments().getInt(KEY_COLOR, -1);
         int feeling = getArguments().getInt(KEY_FEELING, -1);
 
