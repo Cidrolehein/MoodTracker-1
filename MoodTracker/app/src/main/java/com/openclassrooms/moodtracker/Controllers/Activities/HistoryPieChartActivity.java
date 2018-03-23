@@ -17,49 +17,39 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class HistoryPieChartActivity extends AppCompatActivity {
+
+    @BindView(R.id.activity_history_piechart)
+    PieChart pieChart;
+
+    private SharedPreferences mPreferences;
+    private MoodManager mMoodManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_pie_chart);
+        ButterKnife.bind(this);
 
-        PieChart pieChart = (PieChart)findViewById(R.id.activity_history_piechart);
-        SharedPreferences mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
-        MoodManager mMoodManager = MoodManager.getInstance();
+        //Initialize Preferences and instance of MoodManager
+        mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
+        mMoodManager = MoodManager.getInstance();
 
-        float [] moods = new float[5];
+        //Configure view
+        this.configurePieChart();
+    }
 
-        for (int i = 1; i < 8; i++) {
-            int mood = mMoodManager.getMoodFromPrefs(mPreferences, i);
-            switch (mood) {
-                case 0:
-                    moods[0]++;
-                    break;
-                case 1:
-                    moods[1]++;
-                    break;
-                case 2:
-                    moods[2]++;
-                    break;
-                case 3:
-                    moods[3]++;
-                    break;
-                case 4:
-                    moods[4]++;
-                    break;
-            }
-        }
-
-        for (int i = 0; i<moods.length; i++){
-            moods[i] = moods[i] / 7 * 100;
-        }
-
+    private void configurePieChart(){
+        float [] moods = getStats();
         String [] moodLabels = {"Tristesse", "Déception", "Normal", "Satisfaction", "Bonheur"};
         int [] colors = getResources().getIntArray(R.array.colorPagesViewPager);
         List<Integer> moodColors = new ArrayList<>();
         List<PieEntry> entries = new ArrayList<>();
 
+        //Increase size of pie slice per mood present
         for(int i = 0; i<moods.length; i++){
             if (moods[i] != 0.0f){
                 entries.add(new PieEntry(moods[i], moodLabels[i]));
@@ -67,17 +57,45 @@ public class HistoryPieChartActivity extends AppCompatActivity {
             }
         }
 
+        //Configure legend
         Legend legend = pieChart.getLegend();
         legend.setEnabled(true);
 
-
+        //Configure set of piechart
         PieDataSet set = new PieDataSet(entries, "");
         set.setColors(moodColors);
 
+        //Configure data of piechart
         PieData data = new PieData(set);
         pieChart.setData(data);
         pieChart.setDescription(null);
+
+        //Configure stats format of pie chart
         data.setValueFormatter(new DecimalRemover(new DecimalFormat("###,###,###")));
         pieChart.invalidate(); // refresh
     }
+
+    private float [] getStats(){
+        float [] moods = new float[5];
+
+        //Get frequence of each mood
+        for (int i = 1; i < 8; i++) {
+            int mood = mMoodManager.getMoodFromPrefs(mPreferences, i);
+            switch (mood) {
+                case 0: moods[0]++; break;
+                case 1: moods[1]++; break;
+                case 2: moods[2]++; break;
+                case 3: moods[3]++; break;
+                case 4: moods[4]++; break;
+            }
+        }
+
+        //Get percentage of frequence of each mood
+        for (int i = 0; i<moods.length; i++){
+            moods[i] = moods[i] / 7 * 100;
+        }
+    return moods;
+    }
+
+
 }
