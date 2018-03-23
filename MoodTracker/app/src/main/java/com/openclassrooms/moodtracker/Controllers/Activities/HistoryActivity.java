@@ -24,7 +24,6 @@ public class HistoryActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private MoodManager mMoodManager;
 
-    private final double [] viewSizeMultiplier = {0.25, 0.4, 0.6, 0.8, 1};
     private double deviceWidth, deviceHeight;
 
     @Override
@@ -32,10 +31,11 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        //Initialize Preferences
+        //Initialize Preferences and instance of MoodManager
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mMoodManager = MoodManager.getInstance();
 
+        //Configure view
         configureWeeklyMoods();
         configurePieChartButton();
     }
@@ -102,7 +102,8 @@ public class HistoryActivity extends AppCompatActivity {
         TextView textView = (TextView)v.findViewById(R.id.activity_history_textview);
         ImageButton commentButton = (ImageButton)v.findViewById(R.id.activity_history_comment_btn);
 
-        //Define FrameLayout width and height with device width and height
+        //Define FrameLayout metrics with device metrics * size of mood
+        final double [] viewSizeMultiplier = {0.25, 0.4, 0.6, 0.8, 1};
         getDeviceMetrics();
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 (int) (deviceWidth*viewSizeMultiplier[moodOfTheDay]),
