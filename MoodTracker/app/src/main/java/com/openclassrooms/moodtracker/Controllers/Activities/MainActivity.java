@@ -18,108 +18,89 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.openclassrooms.moodtracker.Adapters.PageAdapter;
-import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.MoodManager;
 import com.openclassrooms.moodtracker.R;
 
 import java.util.Calendar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Context mContext;
-    private PopupWindow mPopupWindow;
-    private FrameLayout mMainLayout;
+    @BindView(R.id.activity_main_frame_layout)
+    FrameLayout mMainLayout;
+    @BindView(R.id.activity_main_comment_button)
+    Button mCommentButton;
+    @BindView(R.id.activity_main_history_button)
+    Button mHistoryButton;
+
     private VerticalViewPager viewPager;
-    private Button mCommentButton;
-    private Button mHistoryButton;
-    private Button cancelButton;
-    private Button validateButton;
-    private EditText commentsText;
 
-    private MoodManager mMoodManager;
     private SharedPreferences mPreferences;
-    private int todayYear;
-    private int todayMonth;
-    private int todayDay;
+    private MoodManager mMoodManager;
 
-    private double deviceWidth;
-    private double deviceHeight;
+    private int currentY, currentM, currentD;
+    private int inBetweenDays;
 
-    private final int[] smileys = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
-
-
+    private final int[] smileys = {R.drawable.smiley_sad, R.drawable.smiley_disappointed,
+            R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Configure Comment and History Buttons
-        mCommentButton = (Button) findViewById(R.id.activity_main_comment_button);
-        mHistoryButton = (Button) findViewById(R.id.activity_main_history_button);
-        mMainLayout = (FrameLayout) findViewById(R.id.activity_main_frame_layout);
-        mContext = getApplicationContext();
-        this.configureCommentAndHistoryButtons();
+        ButterKnife.bind(this);
 
+        //Setup SharedPreferences
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mMoodManager = MoodManager.getInstance();
 
-        getCurrentDate();
-
         //If not same day, update WeeklyMoods according with the numbers of day since last opening
-        int nbOfDaysSinceLastOpening = betweenDays(mPreferences);
+        inBetweenDays = inBetweenDays(mPreferences);
+        Log.e("MainActivity onCreate()", "inBetweenDays = " + inBetweenDays);
 
-        if(nbOfDaysSinceLastOpening != 0){
-            int yesterdayMood = mMoodManager.getMoodFromPrefs(mPreferences, 0);
-            Log.e("onCreate", "Before update, mood[0] was (expected = 2) : " + yesterdayMood);
+        if(inBetweenDays != 0) mMoodManager.updateWeeklyMoods(mPreferences, inBetweenDays);
 
-            mMoodManager.updateWeeklyMoods(mPreferences, nbOfDaysSinceLastOpening);
-
-            Log.e("Main", "different day, betweendays = " + nbOfDaysSinceLastOpening + "TodayDate:" + todayDay + "/" + todayMonth + "/" + todayYear);
-        }
-
-
-        //Configure the view pager according to TodayMood (if same day -> saved / if not -> default)
-        int intTodayMood = mMoodManager.getMoodFromPrefs(mPreferences, 0);
-        this.configureViewPager(intTodayMood);
-
+        this.configureHistoryButton();
+        this.configureCommentButton();
+        this.configureViewPager(mMoodManager.getMoodFromPrefs(mPreferences, 0));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        //Get Current Time
+        currentY = Calendar.getInstance().get(Calendar.YEAR);
+        currentM = Calendar.getInstance().get(Calendar.MONTH);
+        currentD = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
         //Save current date
-        mPreferences.edit().putInt("TodayDay", todayDay).apply();
-        mPreferences.edit().putInt("TodayMonth", todayMonth).apply();
-        mPreferences.edit().putInt("TodayYear", todayYear).apply();
+        mPreferences.edit().putInt("TodayDay", currentD).apply();
+        mPreferences.edit().putInt("TodayMonth", currentM).apply();
+        mPreferences.edit().putInt("TodayYear", currentY).apply();
 
-        //Save current mood as WeeklyMood[0]
-        int position = viewPager.getCurrentItem();
-        Log.e("onDestroy()", "Position saved : " + position);
-        mMoodManager.saveMoodToPrefs(mPreferences, 0, position);
+        //Save current mood with viewpager position index
+        mMoodManager.saveMoodToPrefs(mPreferences, 0, viewPager.getCurrentItem());
+        Log.e("MainActivity onDestroy", "mood saved = " + viewPager.getCurrentItem());
     }
 
-    private void getCurrentDate(){
-        todayYear = Calendar.getInstance().get(Calendar.YEAR);
-        todayMonth = Calendar.getInstance().get(Calendar.MONTH);
-        todayDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-    }
-
-    private int betweenDays (SharedPreferences prefsFile) {
+    private int inBetweenDays (SharedPreferences prefsFile) {
 
         int betweenDays;
 
-        int savedYear = prefsFile.getInt("TodayYear", todayYear);
-        int savedMonth = prefsFile.getInt("TodayMonth", todayMonth);
-        int savedDay = prefsFile.getInt("TodayDay", todayDay);
+        int savedYear = prefsFile.getInt("TodayYear", currentY);
+        int savedMonth = prefsFile.getInt("TodayMonth", currentM);
+        int savedDay = prefsFile.getInt("TodayDay", currentD);
 
-        if (savedYear == todayYear && savedMonth == todayMonth){
-            return todayDay - savedDay;
+        if (savedYear == currentY && savedMonth == currentM){
+            return currentD - savedDay;
 
-        }else if ((todayDay < 7) && (todayYear - savedYear <= 1)
-                && ((todayMonth - savedMonth)==1) || (savedMonth==12 && todayMonth==0)) {
+        }else if ((currentD < 7) && (currentY - savedYear <= 1)
+                && ((currentM - savedMonth)==1) || (savedMonth==12 && currentM==0)) {
             int monthNbOfDays = 0;
             switch(savedMonth) {
                 case 0: case 2 : case 4 : case 6 : case 7 : case 9 : case 11: monthNbOfDays = 31; break;
@@ -131,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         monthNbOfDays = 28;
                     break;
             }
-            betweenDays = todayDay + (monthNbOfDays-savedDay);
+            betweenDays = currentD + (monthNbOfDays-savedDay);
         }else{
             betweenDays = 7;
         }
@@ -146,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(todayMood);
     }
 
-    private void configureCommentAndHistoryButtons(){
+    private void configureHistoryButton(){
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void configureCommentPopupWindow(){
+    private void configureCommentButton(){
         // Initialize a new instance of LayoutInflater service
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
         // Inflate the custom layout/view
@@ -216,15 +197,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void getDeviceMetrics(){
-        //Get Device Width and Height
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        WindowManager windowmanager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
-        deviceWidth = displayMetrics.widthPixels;
-        deviceHeight = displayMetrics.heightPixels;
     }
 
 }

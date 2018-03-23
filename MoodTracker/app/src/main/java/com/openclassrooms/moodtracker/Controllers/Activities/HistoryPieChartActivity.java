@@ -9,7 +9,6 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.openclassrooms.moodtracker.Models.WeeklyMoods;
 import com.openclassrooms.moodtracker.MoodManager;
 import com.openclassrooms.moodtracker.R;
 import com.openclassrooms.moodtracker.Adapters.DecimalRemover;
