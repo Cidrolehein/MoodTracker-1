@@ -6,7 +6,6 @@
 
     <dimen name="main_commentPopup_layout_width">250dp</dimen>
     <dimen name="main_commentPopup_layout_height">200dp</dimen>
-    <dimen name="main_commentPopup_cancelBtn_marginEnd">10dp</dimen>
 
     <dimen name="history_textView_marginStart">10dp</dimen>
     <dimen name="history_textview_textSize">12sp</dimen>
