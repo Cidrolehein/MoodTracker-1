@@ -22,11 +22,10 @@ import com.openclassrooms.moodtracker.R;
 public class HistoryActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
-
     private MoodManager mMoodManager;
+
     private final double [] viewSizeMultiplier = {0.25, 0.4, 0.6, 0.8, 1};
-    private double deviceWidth;
-    private double deviceHeight;
+    private double deviceWidth, deviceHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +36,13 @@ public class HistoryActivity extends AppCompatActivity {
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
         mMoodManager = MoodManager.getInstance();
 
-        getDeviceMetrics();
         configureWeeklyMoods();
         configurePieChartButton();
     }
+
+    //----------------------
+    // CONFIGURATION
+    //----------------------
 
     private void getDeviceMetrics(){
         //Get Device Width and Height
@@ -53,8 +55,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void configureWeeklyMoods(){
         //Inflate layout
-        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout container = (LinearLayout) findViewById(R.id.activity_history_linearLayout);
 
         //Create the 7 views of daily moods
@@ -93,8 +94,8 @@ public class HistoryActivity extends AppCompatActivity {
     private void configureFrameLayout(View v, int numDay){
 
         //Get Mood of the day [i]
-        int dailyMood = mMoodManager.getMoodFromPrefs(mPreferences, (numDay));
-        final String dailyComment = mMoodManager.getCommentFromPrefs(mPreferences, (numDay));
+        int moodOfTheDay = mMoodManager.getMoodFromPrefs(mPreferences, (numDay));
+        final String commentOfTheDay = mMoodManager.getCommentFromPrefs(mPreferences, (numDay));
 
         //Serialize FrameLayouts, TextViews and Buttons
         FrameLayout frameLayout = (FrameLayout)v.findViewById(R.id.activity_history_framelayout);
@@ -102,25 +103,26 @@ public class HistoryActivity extends AppCompatActivity {
         ImageButton commentButton = (ImageButton)v.findViewById(R.id.activity_history_comment_btn);
 
         //Define FrameLayout width and height with device width and height
+        getDeviceMetrics();
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                (int) (deviceWidth*viewSizeMultiplier[dailyMood]),
+                (int) (deviceWidth*viewSizeMultiplier[moodOfTheDay]),
                 (int) deviceHeight/9);
 
         //Set FrameLayout
         frameLayout.setLayoutParams(params);
-        frameLayout.setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[dailyMood]);
+        frameLayout.setBackgroundColor(getResources().getIntArray(R.array.colorPagesViewPager)[moodOfTheDay]);
 
         //Set TextView according to Day
         textView.setText(getResources().getStringArray(R.array.dayCount)[numDay-1]);
 
         //Set Comment button if comment exists
-        if(!dailyComment.equals("")){
+        if(!commentOfTheDay.equals("")){
             //Show button + if click on button, show Comment (Toast)
             commentButton.setVisibility(ImageButton.VISIBLE);
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(HistoryActivity.this, dailyComment, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HistoryActivity.this, commentOfTheDay, Toast.LENGTH_SHORT).show();
                 }}   );
         }else{
             commentButton.setVisibility(ImageButton.INVISIBLE);
