@@ -10,6 +10,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.openclassrooms.moodtracker.Models.WeeklyMoods;
+import com.openclassrooms.moodtracker.MoodManager;
 import com.openclassrooms.moodtracker.R;
 import com.openclassrooms.moodtracker.Adapters.DecimalRemover;
 
@@ -26,12 +27,12 @@ public class HistoryPieChartActivity extends AppCompatActivity {
 
         PieChart pieChart = (PieChart)findViewById(R.id.activity_history_piechart);
         SharedPreferences mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
-        WeeklyMoods mDailyMood = new WeeklyMoods();
+        MoodManager mMoodManager = MoodManager.getInstance();
 
         float [] moods = new float[5];
 
         for (int i = 1; i < 8; i++) {
-            int mood = mDailyMood.getDailyMood(mPreferences, i);
+            int mood = mMoodManager.getMoodFromPrefs(mPreferences, i);
             switch (mood) {
                 case 0:
                     moods[0]++;

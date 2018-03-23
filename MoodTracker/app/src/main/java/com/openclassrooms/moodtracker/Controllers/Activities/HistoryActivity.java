@@ -17,13 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.openclassrooms.moodtracker.Models.WeeklyMoods;
+import com.openclassrooms.moodtracker.MoodManager;
 import com.openclassrooms.moodtracker.R;
 
 public class HistoryActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
 
-    private final WeeklyMoods mWeeklyMoods = new WeeklyMoods();
+    private MoodManager mMoodManager;
     private final double [] viewSizeMultiplier = {0.25, 0.4, 0.6, 0.8, 1};
     private double deviceWidth;
     private double deviceHeight;
@@ -35,6 +36,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         //Initialize Preferences
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
+        mMoodManager = MoodManager.getInstance();
 
         getDeviceMetrics();
         configureWeeklyMoods();
@@ -92,8 +94,8 @@ public class HistoryActivity extends AppCompatActivity {
     private void configureFrameLayout(View v, int numDay){
 
         //Get Mood of the day [i]
-        int dailyMood = mWeeklyMoods.getDailyMood(mPreferences, (numDay));
-        final String dailyComment = mWeeklyMoods.getDailyComment(mPreferences, (numDay));
+        int dailyMood = mMoodManager.getMoodFromPrefs(mPreferences, (numDay));
+        final String dailyComment = mMoodManager.getCommentFromPrefs(mPreferences, (numDay));
 
         //Serialize FrameLayouts, TextViews and Buttons
         FrameLayout frameLayout = (FrameLayout)v.findViewById(R.id.activity_history_framelayout);

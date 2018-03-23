@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.openclassrooms.moodtracker.Adapters.PageAdapter;
 import com.openclassrooms.moodtracker.Models.WeeklyMoods;
+import com.openclassrooms.moodtracker.MoodManager;
 import com.openclassrooms.moodtracker.R;
 
 import java.util.Calendar;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private Button validateButton;
     private EditText commentsText;
 
-    private WeeklyMoods mTodayMood;
+    private MoodManager mMoodManager;
     private SharedPreferences mPreferences;
     private int todayYear;
     private int todayMonth;
@@ -63,22 +64,25 @@ public class MainActivity extends AppCompatActivity {
         this.configureCommentAndHistoryButtons();
 
         mPreferences = getSharedPreferences("dailyMoods", MODE_PRIVATE);
-        mTodayMood = new WeeklyMoods();
+        mMoodManager = MoodManager.getInstance();
 
         getCurrentDate();
 
         //If not same day, update WeeklyMoods according with the numbers of day since last opening
         int nbOfDaysSinceLastOpening = betweenDays(mPreferences);
 
-        if(nbOfDaysSinceLastOpening == 0){
-            Log.e("Main", "same day, betweendays = " + nbOfDaysSinceLastOpening +"TodayDate:" + todayDay + "/" + todayMonth + "/" + todayYear);
-        }else{
-            mTodayMood.updateWeeklyMoods(mPreferences, nbOfDaysSinceLastOpening);
+        if(nbOfDaysSinceLastOpening != 0){
+            int yesterdayMood = mMoodManager.getMoodFromPrefs(mPreferences, 0);
+            Log.e("onCreate", "Before update, mood[0] was (expected = 2) : " + yesterdayMood);
+
+            mMoodManager.updateWeeklyMoods(mPreferences, nbOfDaysSinceLastOpening);
+
             Log.e("Main", "different day, betweendays = " + nbOfDaysSinceLastOpening + "TodayDate:" + todayDay + "/" + todayMonth + "/" + todayYear);
         }
 
+
         //Configure the view pager according to TodayMood (if same day -> saved / if not -> default)
-        int intTodayMood = mTodayMood.getDailyMood(mPreferences, 0);
+        int intTodayMood = mMoodManager.getMoodFromPrefs(mPreferences, 0);
         this.configureViewPager(intTodayMood);
 
     }
@@ -93,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Save current mood as WeeklyMood[0]
         int position = viewPager.getCurrentItem();
-        mTodayMood.setDailyMood(mPreferences, 0, position);
+        Log.e("onDestroy()", "Position saved : " + position);
+        mMoodManager.saveMoodToPrefs(mPreferences, 0, position);
     }
 
     private void getCurrentDate(){
@@ -203,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(!dailyComment.equals("")){
                     //Save the comment
-                    mTodayMood.setDailyComment(mPreferences, 0, dailyComment);
+                    mMoodManager.saveCommentToPrefs(mPreferences, 0, dailyComment);
                     mPopupWindow.dismiss();
                     Toast.makeText(MainActivity.this, "Commentaire enregistré", Toast.LENGTH_SHORT).show();
                 }else{
