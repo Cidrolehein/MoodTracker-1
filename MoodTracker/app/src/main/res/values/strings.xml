@@ -15,5 +15,5 @@
     </string-array>
 
     <string name="main_commentPopup_hint">"Écrivez un commentaire"</string>
-
+    <string name="history_commentBtn_description">Comment Button</string>
 </resources>

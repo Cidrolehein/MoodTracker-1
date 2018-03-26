@@ -66,7 +66,7 @@ public class HistoryActivity extends AppCompatActivity {
             //Inflate framelayouts and create new textview and comment button
             view = inflater.inflate(R.layout.activity_history_frame, null);
 
-            configureFrameLayout(view, i);
+            configureDailyFrameLayout(view, i);
 
             //Add to the container (LinearLayout)
             container.addView(view);
@@ -91,7 +91,7 @@ public class HistoryActivity extends AppCompatActivity {
         });
     }
 
-    private void configureFrameLayout(View v, int numDay){
+    private void configureDailyFrameLayout(View v, int numDay){
 
         //Get Mood of the day [i]
         int moodOfTheDay = mMoodManager.getMoodFromPrefs(mPreferences, (numDay));

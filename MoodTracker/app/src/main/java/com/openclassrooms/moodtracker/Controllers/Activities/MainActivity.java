@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         //If not same day, update WeeklyMoods according with the numbers of day since last opening
         inBetweenDays = inBetweenDays(mPreferences);
-        Log.e("MainActivity onCreate()", "inBetweenDays = " + inBetweenDays);
-
         if(inBetweenDays != 0)
             mMoodManager.updateWeeklyMoods(mPreferences, inBetweenDays);
 
@@ -77,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Save current mood with viewpager position index
         mMoodManager.saveMoodToPrefs(mPreferences, 0, viewPager.getCurrentItem());
-        Log.e("MainActivity onDestroy", "mood saved = " + viewPager.getCurrentItem());
     }
 
     //---------------------------
